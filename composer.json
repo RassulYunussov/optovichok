@@ -1,5 +1,9 @@
 {
+<<<<<<< HEAD
     "name": "madi-pc/optovichok",
+=======
+    "name": "rassulyunussov/optovichok",
+>>>>>>> 74aaac531760573991c12bfc6da2c77860dafb7e
     "license": "proprietary",
     "type": "project",
     "autoload": {
@@ -58,7 +62,11 @@
         "symfony-assets-install": "relative",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
+<<<<<<< HEAD
         },
         "branch-alias": null
+=======
+        }
+>>>>>>> 74aaac531760573991c12bfc6da2c77860dafb7e
     }
 }
