@@ -1,13 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Madi-PC
- * Date: 11.01.2017
- * Time: 10:18
- */
 
 namespace AppBundle\DataFixtures\ORM;
 
+
+use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\Persistence\ObjectManager;
+use AppBundle\Entity\Oproduct;
 
 class FixtureLoader
 {

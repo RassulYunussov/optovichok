@@ -1,15 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Madi-PC
- * Date: 18.01.2017
- * Time: 15:07
- */
 
 namespace AppBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-class RegistrController
+
+class RegistrController extends Controller
 {
-
+    /**
+     * @Route("/registr-page", name="registr_index")
+     * @Method("GET")
+     */
+    public function indexAction()
+    {
+        return $this->render('AppBundle:oRegistr:registr.html.twig');
+    }
 }

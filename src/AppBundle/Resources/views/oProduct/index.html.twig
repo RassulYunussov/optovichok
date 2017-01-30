@@ -1,0 +1,43 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body_blog %}
+    <h1>oProduct list</h1>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Photo</th>
+                <th>Nameproduct</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for oProduct in oProducts %}
+            <tr>
+                <td><a href="{{ path('new_show', { 'id': oProduct.id }) }}">{{ oProduct.id }}</a></td>
+                <td>{{ oProduct.photo }}</td>
+                <td>{{ oProduct.nameProduct }}</td>
+                <td>{{ oProduct.description }}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('new_show', { 'id': oProduct.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('new_edit', { 'id': oProduct.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('new_new') }}">Create a new oProduct</a>
+        </li>
+    </ul>
+{% endblock %}

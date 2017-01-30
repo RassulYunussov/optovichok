@@ -1,10 +1,71 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
+    <meta http-equiv="Content-Type" content="text/html" charset=utf-8" />
+    <title>{% block title %}ОптовичОк{% endblock %} - ОптовичОк</title>
+    {% block stylesheets %}
+        <link href="{{ asset('css/base.css') }}" type="text/css" rel="stylesheet" />
+        <link href="{{ asset('css/magnific-popup.css') }}" type="text/css" rel="stylesheet">
+        <link href="{{ asset('css/bootstrap.min.css') }}" type="text/css" rel="stylesheet">
+    {% endblock %}
 </head>
 <body>
-$END$
+
+<section id="wrapper">
+    {#header#}
+    <header id="header">
+        {% block navigation %}
+            <nav class="navbar navbar-default">
+                <div class="container-fluid">
+                    <!-- Brand and toggle get grouped for better mobile display -->
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="{{ path('home_page') }}">ОптовичОк</a>
+                    </div>
+
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <ul class="nav navbar-nav">
+                            <li><a href="{{ path('auth_index') }}">Вход <span class="sr-only">(current)</span></a></li>
+                            <li><a href="{{ path('registr_index') }}">Регистрация</a></li>
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#">Помощь</a></li>
+                        </ul>
+                    </div><!-- /.navbar-collapse -->
+                </div><!-- /.container-fluid -->
+            </nav>
+        {% endblock %}
+    </header>
+
+    {#search_container#}
+    {% block search %}{% endblock %}
+
+    {#body#}
+    <div id="body-blog-body">
+        {% block body_blog %}
+
+        {% endblock %}
+    </div>
+
+
+    {#footer#}
+    <div id="footer">
+        {% block footer %}
+            &copy; Copyright 2017, ОптовичОк.
+        {% endblock %}
+    </div>
+</section>
+
+{% block javascripts %}
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="javascript/bootstrap.min.js"></script>
+{% endblock %}
+
 </body>
 </html>

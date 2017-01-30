@@ -1,0 +1,40 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body_blog %}
+    <h1>oProduct</h1>
+
+    <table class="table table-bordered">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ oProduct.id }}</td>
+            </tr>
+            <tr>
+                <th>Photo</th>
+                <td>{{ oProduct.photo }}</td>
+            </tr>
+            <tr>
+                <th>Nameproduct</th>
+                <td>{{ oProduct.nameProduct }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ oProduct.description }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('new_index') }}">Back to the list</a>
+        </li>
+        <li>
+            <a href="{{ path('new_edit', { 'id': oProduct.id }) }}">Edit</a>
+        </li>
+        <li>
+            {{ form_start(delete_form) }}
+                <input type="submit" value="Delete">
+            {{ form_end(delete_form) }}
+        </li>
+    </ul>
+{% endblock %}

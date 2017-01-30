@@ -1,15 +1,19 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Madi-PC
- * Date: 18.01.2017
- * Time: 15:05
- */
 
 namespace AppBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-class AuthController
+class AuthController extends Controller
 {
-
+    /**
+     * @Route("/auth-page", name="auth_index")
+     * @Method("GET")
+     */
+    public function indexAction()
+    {
+        return $this->render('AppBundle:oAuth:auth.html.twig');
+    }
 }
