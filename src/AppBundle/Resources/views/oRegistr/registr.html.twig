@@ -1,0 +1,16 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block title%}Регистрация{% endblock %}
+
+{% block registr %}
+<div class="registr-form">
+        <form class="registr-form-registr">
+                <label>Логин</label><input type="text" class="login-input-registr"><br>
+                <label>E-mail</label><input type="email" class="email-input-registr"><br>
+                <label>Пароль</label><input type="text" class="pass-input-registr"><br>
+                <input type="submit" value="Регистрация" class="button-registr">
+        </form>
+</div>
+{% endblock %}
+
+
