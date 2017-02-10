@@ -1,0 +1,40 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * Oad
+ *
+ * @ORM\Table(name="oAd")
+ * @ORM\Entity
+ */
+class Oad
+{
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="Company", type="integer", nullable=false)
+     */
+    private $company;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="Product", type="integer", nullable=false)
+     */
+    private $product;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id_Ad", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $idAd;
+
+
+}
+

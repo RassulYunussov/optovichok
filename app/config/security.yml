@@ -1,24 +1,44 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/book/security.html
 security:
-
-    # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
+# http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
+        in_db:
+            entity:
+                class: AppBundle:oUser
+                property: email
         in_memory:
-            memory: ~
-
+            memory:
+             users:
+              admin@optovichok.com:
+               password: 'admin'
+               roles: 'ROLE_ADMIN'
+              company@optovichok.com:
+               password: 'company'
+               roles: 'ROLE_COMPANY'
+              client@optovichok.com:
+               password: 'client'
+               roles: 'ROLE_CLIENT'
+    encoders:
+        Symfony\Component\Security\Core\User\User: plaintext
+        Symfony\Component\Security\Core\User\UserInterface: bcrypt
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
-
         main:
             anonymous: ~
             # activate different ways to authenticate
 
-            # http_basic: ~
+            http_basic: ~
             # http://symfony.com/doc/current/book/security.html#a-configuring-how-your-users-will-authenticate
 
             # form_login: ~
-            # http://symfony.com/doc/current/cookbook/security/form_login_setup.html
+            form_login:
+                login_path: login
+                check_path: login
+                csrf_token_generator: security.csrf.token_manager
+                provider: in_db
+            logout:
+                path:   /logout

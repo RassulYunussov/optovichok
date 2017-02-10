@@ -6,14 +6,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-class AuthController extends Controller
+class oHomeController extends Controller
 {
     /**
-     * @Route("/auth-page", name="auth_index")
-     * @Method("GET")
+     * @Route("/", name="home_page")
      */
     public function indexAction()
     {
-        return $this->render('AppBundle:oAuth:auth.html.twig');
+        return $this->render('AppBundle::index.html.twig');
     }
 }

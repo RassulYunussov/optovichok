@@ -3,9 +3,9 @@
 namespace AppBundle\Entity;
 
 /**
- * Obasket
+ * Oamountproducts
  */
-class Obasket 
+class Oamountproducts
 {
     /**
      * @var integer
@@ -20,7 +20,7 @@ class Obasket
     /**
      * @var integer
      */
-    private $idClient;
+    private $product;
 
 
     /**
@@ -38,7 +38,7 @@ class Obasket
      *
      * @param integer $amountproducts
      *
-     * @return Obasket
+     * @return Oamountproducts
      */
     public function setAmountproducts($amountproducts)
     {
@@ -58,26 +58,26 @@ class Obasket
     }
 
     /**
-     * Set idClient
+     * Set product
      *
-     * @param integer $idClient
+     * @param integer $product
      *
-     * @return Obasket
+     * @return Oamountproducts
      */
-    public function setIdClient($idClient)
+    public function setProduct($product)
     {
-        $this->idClient = $idClient;
+        $this->product = $product;
 
         return $this;
     }
 
     /**
-     * Get idClient
+     * Get product
      *
      * @return integer
      */
-    public function getIdClient()
+    public function getProduct()
     {
-        return $this->idClient;
+        return $this->product;
     }
 }

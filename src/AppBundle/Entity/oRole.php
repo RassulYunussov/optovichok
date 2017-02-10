@@ -24,9 +24,17 @@ class oRole
 
     /**
      * @var string
-     * @ORM\Column(name="email", type="string", length=60, nullable=false)
+     * @ORM\Column(name="name", type="string", length=60, nullable=false)
      */
     private $name;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="code", type="string", length=45, nullable=false)
+     */
+    private $code;
+
 
     /**
      * @return int
@@ -44,6 +52,11 @@ class oRole
         return $this->name;
     }
 
+    public function __toString()
+    {
+        return $this->getName();
+    }
+
     /**
      * @param string $name
      *
@@ -52,5 +65,28 @@ class oRole
     public function setName($name)
     {
         $this->name = $name;
+        return $this;
+    }
+
+    /**
+     * Get code
+     *
+     * @return string
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * Set code
+     *
+     * @param string $code
+     *
+     * @return oRole
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
     }
 }

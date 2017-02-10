@@ -1,39 +1,30 @@
 {% extends 'AppBundle::base.html.twig' %}
 {% form_theme form 'bootstrap_3_layout.html.twig' %}
 
-{% block body_blog %}
+{% block body %}
 
 <div class="div-ad-ad">
     <h3 class="ad-ad">Подать объявление на ОптовичОк</h3>
 </div>
-<div id="company-page-ad">
-    <form method="POST">
-        {{ form_start(form) }}
-        <div class="form-group">
-            <label>Заголовок</label>
-            {{ form_widget(form.nameProduct) }}
+
+        <div id="company-page-ad">
+                {{ form_start(form) }}
+                {{ form_row(form.nameProduct) }}
+                {{ form_row(form.category) }}
+                {{ form_row(form.description) }}
+                <div class="file-upload" data-text="Выберите файл">
+                  {{ form_row(form.photo) }}
+                </div>
+                <p class="help-block">Выберите фотографию для вашего объявления, пожалуйста.</p>
+                <button type="submit" class="btn btn-primary btn-lg active">Опубликовать</button>
+                {{ form_end(form) }}
+                <ul>
+                        <li>
+                                <a href="{{ path('new_index') }}">Back to the list</a>
+                        </li>
+                </ul>
         </div>
-        <div class="form-group">
-            <label>Категория</label>
-            {{ form_widget(form.category) }}
-        </div>
-        <div class="form-group">
-            <label>Описание</label>
-            {{ form_widget(form.description) }}
-        </div>
-        <div class="form-group">
-            <label>Фотографии</label>
-            {{ form_widget(form.photo) }}
-            <p class="help-block">Выберите, пожалуйста, фотографию для вашего объявления.</p>
-        </div>
-        <button type="submit" class="btn btn-primary btn-lg active">Опубликовать</button>
-        {{ form_end(form) }}
-    </form>
-    <ul>
-        <li>
-            <a href="{{ path('new_index') }}">Back to the list</a>
-        </li>
-    </ul>
-</div>
+
+
 
 {% endblock %}

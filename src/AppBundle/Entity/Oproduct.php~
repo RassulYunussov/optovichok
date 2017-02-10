@@ -1,0 +1,265 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * oProduct
+ *
+ * @ORM\Table()
+ * @ORM\Entity
+ */
+class oProduct
+{
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name_product", type="string", length=255)
+     */
+    private $nameProduct;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\oProductCategory")
+     * @ORM\JoinColumn(name="name_category", referencedColumnName="id")
+     */
+    private $category;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="description", type="string", length=255)
+     */
+    private $description;
+
+    /**
+     * @Assert\File(maxSize="6000000")
+     */
+    private $photo;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    private $id;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    public $path;
+
+
+    /**
+     * Set nameProduct
+     *
+     * @param string $nameProduct
+     *
+     * @return oProduct
+     */
+    public function setNameProduct($nameProduct)
+    {
+        $this->nameProduct = $nameProduct;
+
+        return $this;
+    }
+
+    /**
+     * Get nameProduct
+     *
+     * @return string
+     */
+    public function getNameProduct()
+    {
+        return $this->nameProduct;
+    }
+
+    /**
+     * Set category
+     *
+     * @param oProductCategory $category
+     *
+     * @return oProduct
+     */
+    public function setCategory( oProductCategory $category)
+    {
+        $this->category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return oProductCategory
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     *
+     * @return oProduct
+     */
+    public function setDescription($description)
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * Set photo
+     *
+     * @param UploadedFile $photo
+     */
+    public function setPhoto($photo = null)
+    {
+        $this->photo = $photo;
+    }
+
+    /**
+     * Get photo
+     *
+     * @return UploadedFile
+     */
+    public function getPhoto()
+    {
+        return $this->photo;
+    }
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function getAbsolutePath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadRootDir().'/'.$this->path;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadDir().'/'.$this->path;
+    }
+
+    protected function getUploadRootDir()
+    {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        // get rid of the __DIR__ so it doesn't screw up
+        // when displaying uploaded doc/image in the view.
+        return 'uploads/productPhoto';
+    }
+
+    public function upload()
+    {
+        // the file property can be empty if the field is not required
+        if (null === $this->getPhoto()) {
+            return;
+        }
+
+        // use the original file name here but you should
+        // sanitize it at least to avoid any security issues
+
+        // move takes the target directory and then the
+        // target filename to move to
+        $this->getPhoto()->move(
+            $this->getUploadRootDir(),
+            $this->getPhoto()->getClientOriginalName()
+        );
+
+        // set the path property to the filename where you've saved the file
+        $this->path = $this->getPhoto()->getClientOriginalName();
+
+        // clean up the file property as you won't need it anymore
+        $this->photo = null;
+    }
+    /**
+     * @var integer
+     */
+    private $nameCategory;
+
+
+    /**
+     * Set nameCategory
+     *
+     * @param integer $nameCategory
+     *
+     * @return Oproduct
+     */
+    public function setNameCategory($nameCategory)
+    {
+        $this->nameCategory = $nameCategory;
+
+        return $this;
+    }
+
+    /**
+     * Get nameCategory
+     *
+     * @return integer
+     */
+    public function getNameCategory()
+    {
+        return $this->nameCategory;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     *
+     * @return Oproduct
+     */
+    public function setPath($path)
+    {
+        $this->path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->path;
+    }
+}

@@ -31,8 +31,8 @@
                     <!-- Collect the nav links, forms, and other content for toggling -->
                     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                         <ul class="nav navbar-nav">
-                            <li><a href="{{ path('auth_index') }}">Вход <span class="sr-only">(current)</span></a></li>
-                            <li><a href="{{ path('registr_index') }}">Регистрация</a></li>
+                            <li><a href="{{ path('login') }}">Вход <span class="sr-only">(current)</span></a></li>
+                            <li><a href="{{ path('user_registration') }}">Регистрация</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li><a href="#">Помощь</a></li>
@@ -48,7 +48,7 @@
 
     {#body#}
     <div id="body-blog-body">
-        {% block body_blog %}
+        {% block body %}
 
         {% endblock %}
     </div>

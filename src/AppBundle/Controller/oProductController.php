@@ -3,9 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\oProduct;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -46,20 +47,9 @@ class oProductController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /**
-             * @var UploadedFile $file
-             */
-            $file = $oProduct->getPhoto();
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
-            $file->move(
-                $this->getParameter('photo_directory'),
-                $fileName
-            );
-            $oProduct->setPhoto($fileName);
-
             $em = $this->getDoctrine()->getManager();
             $em->persist($oProduct);
-            $em->flush($oProduct);
+            $em->flush();
 
             return $this->redirectToRoute('new_show', array('id' => $oProduct->getId()));
         }

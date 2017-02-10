@@ -26,15 +26,9 @@ class oClient
 
     /**
      * @var string
-     * @ORM\Column(name="email", type="string", length=60, nullable=false)
+     * @ORM\Column(name="email_client", type="string", length=60, nullable=false)
      */
     private $email;
-
-    /**
-     * @var string
-     * @ORM\Column(name="password", type="string", length=60, nullable=false)
-     */
-    private $password;
 
     /**
      * @var string
@@ -59,16 +53,6 @@ class oClient
      * @ORM\Column(name="email", type="string", length=25, nullable=false)
      */
     private $phone;
-
-    /**
-     * @var \AppBundle\Entity\oRole
-     *
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\oRole")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="roleid", referencedColumnName="id")
-     * })
-     */
-    private $role;
 
 
     /**
@@ -95,24 +79,6 @@ class oClient
     public function setEmail($email)
     {
         $this->email = $email;
-    }
-
-    /**
-     * @return string
-     */
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    /**
-     * @param string $password
-     *
-     * @return oClient
-     */
-    public function setPassword($password)
-    {
-        $this->password = $password;
     }
 
     /**
@@ -187,21 +153,4 @@ class oClient
         $this->phone = $phone;
     }
 
-    /**
-     * @return \AppBundle\Entity\oRole
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
-     * @param \AppBundle\Entity\oRole $role
-     *
-     * @return oClient
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
-    }
 }

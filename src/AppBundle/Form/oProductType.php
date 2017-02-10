@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+
 class oProductType extends AbstractType
 {
     /**
@@ -23,8 +24,6 @@ class oProductType extends AbstractType
         $builder->add('category', null, array('label' => 'Категория'));
         $builder->add('description', TextareaType::class, array('label'=>'Описание'));
         $builder->add('photo', FileType::class, array('label' => 'Фотография'));
-
-
     }
 
     /**

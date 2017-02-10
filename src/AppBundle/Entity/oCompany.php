@@ -24,15 +24,9 @@ class oCompany
 
     /**
      * @var string
-     * @ORM\Column(name="email", type="string", length=60, nullable=false)
+     * @ORM\Column(name="email_company", type="string", length=65, nullable=false)
      */
     private $email;
-
-    /**
-     * @var string
-     * @ORM\Column(name="password", type="string", length=60, nullable=false)
-     */
-    private $password;
 
     /**
      * @var string
