@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 /**
  * Oproduct controller.
  *
- * @Route("oproducts")
+ * @Route("/oproducts")
  */
 class oProductController extends Controller
 {

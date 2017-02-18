@@ -28,7 +28,6 @@ class oLoginController extends Controller
             'last_username' => $lastUsername,
             'error' => $error,
         ));
-
     }
     /**
      * @Route("/logout", name="logout")
