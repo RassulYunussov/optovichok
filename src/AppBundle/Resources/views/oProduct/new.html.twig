@@ -12,9 +12,7 @@
                 {{ form_row(form.nameProduct) }}
                 {{ form_row(form.category) }}
                 {{ form_row(form.description) }}
-                <div class="file-upload" data-text="Выберите файл">
-                  {{ form_row(form.photo) }}
-                </div>
+                {{ form_row(form.photo) }}
                 <p class="help-block">Выберите фотографию для вашего объявления, пожалуйста.</p>
                 <button type="submit" class="btn btn-primary btn-lg active">Опубликовать</button>
                 {{ form_end(form) }}

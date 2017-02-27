@@ -19,8 +19,24 @@ use AppBundle\Entity\oUser;
 /**
  * @Route("/api")
  */
-class RegisterRESTController extends FOSRestController
+class RESTapiController extends FOSRestController
 {
+    /**
+     * @Rest\Post("/login/")
+     */
+    ###### LOGIN ###########
+    public function loginUser(Request $request)
+    {
+        $email = $request->get('email');
+        $password = $request->get('password');
+
+        if($email->get('security.authorization_checker')->isGranted('ROLE_CLIENT'))
+            return new View("This account has CLIENT ROLE", Response::HTTP_OK);
+        if($email->get('security.authorization_checker')->isGranted('ROLE_COMPANY'))
+            return new View("This account has COMPANY ROLE", Response::HTTP_OK);
+        return new View("user not found", Response::HTTP_NOT_FOUND);
+
+    }
 
     ################              REGISTER ########################
     /**
@@ -53,18 +69,24 @@ class RegisterRESTController extends FOSRestController
     public function postUser(Request $request)
     {
         $data = new oUser();
+
         $email = $request->get('email');
         $username = $request->get('username');
         $password = $request->get('password');
-        $role = $request->get('code');
-        if(empty($email) || empty($username) || empty($password) || empty($role))
+        $role = $request->get('role');
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->createQuery('SELECT role FROM AppBundle:oRole role WHERE role.code = :code')->setParameter('code', $role);
+        $orole = $query->getSingleResult();
+
+        if(empty($email) || empty($username) || empty($password))
         {
             return new View("NULL VALUES ARE NOT ALLOWED", Response::HTTP_NOT_ACCEPTABLE);
         }
         $data->setEmail($email);
         $data->setUsername($username);
         $data->setPassword($password);
-        $data->setRole($role);
+        $data->setRole($orole);
         $em = $this->getDoctrine()->getManager();
         $em->persist($data);
         $em->flush();
@@ -114,20 +136,6 @@ class RegisterRESTController extends FOSRestController
         return new View("deleted successfully", Response::HTTP_OK);
     }
 
-    /**
-     * @Method("POST")
-     * @Route("/login")
-     */
-    public function loginDes(Request $request)
-    {
-        $content = $request->getContent();
-        $serializer = $this->get('serializer');
-        $userLogin = $serializer->deserialize($content, oUser::class, 'json');
-
-        return new Response($userLogin);
-    }
-
-
     ####      PRODUCTS            #################################
     /**
      * @Rest\Get("/product")
@@ -163,12 +171,17 @@ class RegisterRESTController extends FOSRestController
         $category = $request->get('category');
         $description = $request->get('description');
         $photo = $request->get('photo');
+
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery('SELECT productCategory FROM AppBundle:oProductCategory productCategory WHERE productCategory.nameCategory = :nameCategory')->setParameter('nameCategory', $category);
+        $ocategory = $query->getSingleResult();
+
         if(empty($nameProduct) || empty($category) || empty($description) || empty($photo))
         {
             return new View("NULL VALUES ARE NOT ALLOWED", Response::HTTP_NOT_ACCEPTABLE);
         }
         $product->setNameProduct($nameProduct);
-        $product->setCategory($category);
+        $product->setCategory($ocategory);
         $product->setDescription($description);
         $base64 = base64_decode($photo);
         $product->setPhoto($base64);
@@ -205,7 +218,7 @@ class RegisterRESTController extends FOSRestController
     }
 
     /**
-     * @Rest\Delete("/user/{id}")
+     * @Rest\Delete("/product/{id}")
      */
     public function deleteProduct($id)
     {
