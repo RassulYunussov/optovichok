@@ -1,43 +1,44 @@
 {% extends 'AppBundle::base.html.twig' %}
 
-{% block body %}
-    <h1>oProduct list</h1>
+    {% block search %}
+        <section id="search-container">
+            <div class="search-container-div">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="input-group">
+                        <span class="input-group-btn">
+                        </span>
+                        </div><!-- /input-group -->
+                    </div><!-- /.col-lg-6 -->
+                    <form class="search-main" id="searchmain" method="POST" action="">
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Поиск">
+                                <span class="input-group-btn">
+                                     <button class="btn btn-default" type="button">Поиск</button>
+                                </span>
+                            </div><!-- /input-group -->
+                        </div><!-- /.col-lg-6 -->
+                    </form>
+                </div><!-- /.row -->
+            </div>
+        </section>
+    {% endblock %}
 
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Photo</th>
-                <th>Nameproduct</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+
+    {% block body %}
         {% for oProduct in oProducts %}
-            <tr>
-                <td><a href="{{ path('new_show', { 'id': oProduct.id }) }}">{{ oProduct.id }}</a></td>
-                <td>{{ oProduct.photo }}</td>
-                <td>{{ oProduct.nameProduct }}</td>
-                <td>{{ oProduct.description }}</td>
-                <td>
-                    <ul>
-                        <li>
-                            <a href="{{ path('new_show', { 'id': oProduct.id }) }}">show</a>
-                        </li>
-                        <li>
-                            <a href="{{ path('new_edit', { 'id': oProduct.id }) }}">edit</a>
-                        </li>
-                    </ul>
-                </td>
-            </tr>
+        <section id="main-body">
+            <div class="row">
+                <div class="col-sm-6 col-md-4">
+                    <div class="thumbnail">
+                        <a href="#"><img src="uploads/{{ oProduct.photo }}" alt="..."></a>
+                        <div class="caption">
+                            <a href="{{ path('new_show', { 'id': oProduct.id }) }}"><h4>{{ oProduct.header }}</h4></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
         {% endfor %}
-        </tbody>
-    </table>
-
-    <ul>
-        <li>
-            <a href="{{ path('new_new') }}">Create a new oProduct</a>
-        </li>
-    </ul>
-{% endblock %}
+    {% endblock %}

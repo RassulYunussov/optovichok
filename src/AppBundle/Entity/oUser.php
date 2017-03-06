@@ -58,6 +58,28 @@ class oUser implements UserInterface
     private $role;
 
     /**
+     * @var string
+     * @ORM\Column(name="telephone", type="string", length=11, nullable=true)
+     */
+    private $telephone;
+
+    /**
+     * @return string
+     */
+    public function getTelephone()
+    {
+        return $this->telephone;
+    }
+
+    /**
+     * @param string $telephone
+     */
+    public function setTelephone($telephone)
+    {
+        $this->telephone = $telephone;
+    }
+
+    /**
      * Get id
      *
      * @return integer

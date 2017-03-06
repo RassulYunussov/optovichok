@@ -20,7 +20,7 @@ class oProductType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('nameProduct', TextType::class, array('label' => 'Название продукта'));
+        $builder->add('header', TextType::class, array('label' => 'Название продукта'));
         $builder->add('category', null, array('label' => 'Категория'));
         $builder->add('description', TextareaType::class, array('label'=>'Описание'));
         $builder->add('photo', FileType::class, array('label' => 'Фотография'));

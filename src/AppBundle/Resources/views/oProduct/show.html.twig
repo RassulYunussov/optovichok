@@ -1,7 +1,7 @@
 {% extends 'AppBundle::base.html.twig' %}
 
 {% block body %}
-    <h1>oProduct</h1>
+    <h1>{{ oProduct.header }}</h1>
 
     <table class="table table-bordered">
         <tbody>
@@ -14,8 +14,8 @@
                 <td>{{ oProduct.photo }}</td>
             </tr>
             <tr>
-                <th>Nameproduct</th>
-                <td>{{ oProduct.nameProduct }}</td>
+                <th>Header</th>
+                <td>{{ oProduct.header }}</td>
             </tr>
             <tr>
                 <th>Description</th>

@@ -47,6 +47,16 @@ class oProductController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            /**
+             * @var UploadedFile $file
+             */
+            $file = $oProduct->getPhoto();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move(
+                $this->getParameter('photo_directory'),
+                $fileName);
+            $oProduct->setPhoto($fileName);
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($oProduct);
             $em->flush();

@@ -25,15 +25,15 @@ class oProduct
     /**
      * @var string
      *
-     * @ORM\Column(name="photo", type="blob", length=65535, nullable=false)
+     * @ORM\Column(name="photo", type="string", length=50, nullable=false)
      */
     private $photo;
 
     /**
      * @var string
-     * @ORM\Column(name="name_product", type="string", length=255, nullable=false)
+     * @ORM\Column(name="header", type="string", length=255, nullable=false)
      */
-    private $nameProduct;
+    private $header;
 
     /**
      * @var \AppBundle\Entity\oProductCategory
@@ -51,6 +51,33 @@ class oProduct
      */
     private $description;
 
+    /**
+     * @var \AppBundle\Entity\oUser
+     *
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\oUser")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * })
+     */
+    private $userid;
+
+
+    /**
+     * @return \AppBundle\Entity\oUser
+     */
+    public function getUserid()
+    {
+        return $this->userid;
+    }
+
+    /**
+     * @param \AppBundle\Entity\oUser $userid
+     * @return oProduct
+     */
+    public function setUserid($userid)
+    {
+        $this->userid = $userid;
+    }
 
     /**
      * Get id
@@ -89,18 +116,18 @@ class oProduct
     /**
      * @return string
      */
-    public function getNameProduct()
+    public function getHeader()
     {
-        return $this->nameProduct;
+        return $this->header;
     }
 
     /**
-     * @param string $nameProduct
+     * @param string $header
      * @return oProduct
      */
-    public function setNameProduct($nameProduct)
+    public function setHeader($header)
     {
-        $this->nameProduct = $nameProduct;
+        $this->header = $header;
     }
 
     /**
