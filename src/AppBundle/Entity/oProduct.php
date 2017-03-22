@@ -25,7 +25,7 @@ class oProduct
     /**
      * @var string
      *
-     * @ORM\Column(name="photo", type="string", length=50, nullable=false)
+     * @ORM\Column(name="photo", type="string", length=50, nullable=true)
      */
     private $photo;
 

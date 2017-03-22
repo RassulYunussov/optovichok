@@ -26,12 +26,6 @@ class oClient
 
     /**
      * @var string
-     * @ORM\Column(name="email_client", type="string", length=60, nullable=false)
-     */
-    private $email;
-
-    /**
-     * @var string
      * @ORM\Column(name="first_name", type="string", length=45, nullable=false)
      */
     private $firstName;
@@ -48,12 +42,6 @@ class oClient
      */
     private $address;
 
-    /**
-     * @var string
-     * @ORM\Column(name="email", type="string", length=25, nullable=false)
-     */
-    private $phone;
-
 
     /**
      * @return int
@@ -61,24 +49,6 @@ class oClient
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
-
-    /**
-     * @param string $email
-     *
-     * @return oClient
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
     }
 
     /**
@@ -134,23 +104,4 @@ class oClient
     {
         $this->address = $address;
     }
-
-    /**
-     * @return string
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    /**
-     * @param string $phone
-     *
-     * @return oClient
-     */
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-    }
-
 }

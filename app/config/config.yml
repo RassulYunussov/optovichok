@@ -78,6 +78,9 @@ nelmio_cors:
 
 # FOSRest Configuration
 fos_rest:
+    routing_loader:
+            default_format: json                            # All responses should be JSON formated
+            include_format: false
     body_listener: true
     format_listener:
         rules:
@@ -89,3 +92,20 @@ fos_rest:
         formats:
             json: true
 
+nelmio_api_doc: ~
+
+#fos_user:
+  #  db_driver: orm
+   # firewall_name: api                                  # Seems to be used when registering user/reseting password,
+                                                        # but since there is no "login", as so it seems to be useless in
+                                                        # our particular context, but still required by "FOSUserBundle"
+   # user_class: Acme\ApiBundle\Entity\User
+
+#fos_oauth_server:
+    #db_driver:           orm
+    #client_class:        Acme\ApiBundle\Entity\Client
+    #access_token_class:  Acme\ApiBundle\Entity\AccessToken
+   # refresh_token_class: Acme\ApiBundle\Entity\RefreshToken
+    #auth_code_class:     Acme\ApiBundle\Entity\AuthCode
+  #  service:
+     #   user_provider: fos_user.user_manager

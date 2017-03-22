@@ -11,25 +11,19 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * @Route("/users")
+ * @Security("has_role('ROLE_CLIENT')")
  */
-class UsersController extends Controller
+class oClientController extends Controller
 {
     /**
      * @Route("/client_page", name="client_page")
      */
     public function clientAction()
     {
-        return $this->render('AppBundle:UserPage:client_page.html.twig');
-    }
-
-    /**
-     * @Route("/company_page", name="company_page")
-     */
-    public function companyAction()
-    {
-        return $this->render('AppBundle:UserPage:company_page.html.twig');
+        return $this->render('AppBundle:oClient:client_page.html.twig');
     }
 }

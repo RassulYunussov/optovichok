@@ -1,0 +1,17 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <h3>Ваши продукты!</h3>
+    <section id="product_section">
+        <div class="col">
+            <div class="col-sm-6 col-md-3">
+                <div class="thumbnail">
+                    <a href="{{ path('new_show', { 'id': oProduct.id }) }}"><img class="image1" src="{{ asset('uploads/' ~ oProduct.photo) }}" alt="{{ oProduct.header }}"></a>
+                    <div class="caption">
+                        <a href="{{ path('new_show', { 'id': oProduct.id }) }}"><h4>{{ oProduct.header }}</h4></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

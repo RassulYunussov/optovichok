@@ -1,0 +1,19 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+
+    <h2>Welcome to company page!</h2>
+    <h4>Здесь вы можете добавить продукт!</h4>
+        <ul>
+            <li>
+                <a href="{{ path('new_new') }}">Добавить новый продукт</a>
+            </li>
+            <li>
+                <a href="{{ path('logout') }}">Выйти</a>
+            </li>
+        </ul>
+    <div id="bc1" class="btn-group btn-breadcrumb">
+        <a class="btn btn-lg btn-primary btn-block" href="{{path('product_index')}}"><i class="fa fa-home"></i>Мои продукты</a>
+    </div>
+
+{% endblock %}

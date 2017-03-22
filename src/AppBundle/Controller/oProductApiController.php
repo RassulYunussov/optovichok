@@ -9,16 +9,43 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\View\View;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 
 /**
  * @Route("/api")
  */
 class oProductApiController extends FOSRestController
 {
+    /**
+     * @Rest\Get("/product_10")
+     */
+    public function paginatorAction()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $dql = "SELECT product FROM AppBundle:oProduct product";
+        $query = $em->createQuery($dql)->setFirstResult(0)->setMaxResults(10);
+
+        $myArray = $query->getArrayResult();
+        return new JsonResponse($myArray);
+    }
+
+    /**
+     * @Rest\Get("/category")
+     */
+    public function getCategory()
+    {
+        $em = $this->getDoctrine()->getEntityManager();
+        $query = $em->createQuery('SELECT productCategory FROM AppBundle:oProductCategory productCategory');
+        $myArray = $query->getArrayResult();
+        return new JsonResponse($myArray);
+    }
+
     /**
      * @Rest\Get("/product")
      */
@@ -53,25 +80,31 @@ class oProductApiController extends FOSRestController
         $header = $request->get('header');
         $category = $request->get('category');
         $description = $request->get('description');
+        //$photo = $request->files->get('photo');
         $photo = $request->get('photo');
         $userid = $request->get('user_id');
 
         $em = $this->getDoctrine()->getManager();
 
-        $query = $em->createQuery('SELECT productCategory FROM AppBundle:oProductCategory productCategory WHERE productCategory.id = :id')->setParameter('id', $category);
+        $query = $em->createQuery('SELECT productCategory FROM AppBundle:oProductCategory productCategory WHERE productCategory.nameCategory = :nameCategory')->setParameter('nameCategory', $category);
         $ocategory = $query->getSingleResult();
         $query1 = $em->createQuery('SELECT id FROM AppBundle:oUser id WHERE id.id = :id')->setParameter('id', $userid);
         $ouserid = $query1->getSingleResult();
 
         if(empty($header) || empty($category) || empty($description) || empty($photo) || empty($userid))
         {
-            return new View("NULL VALUES ARE NOT ALLOWED", Response::HTTP_NOT_ACCEPTABLE);
+            return new View("NULL VALUES ARE NOT ALLOWED", Response::HTTP_NOT_ACCEPTABLE );
         }
         $product->setHeader($header);
         $product->setCategory($ocategory);
         $product->setDescription($description);
-       // $base64 = base64_decode($photo);
-        $product->setPhoto($photo);
+
+        $name = md5(uniqid()).'.jpeg';
+        $dir = $this->get('kernel')->getRootDir() . '/../web/uploads/'.$name;
+
+        file_put_contents($dir, base64_decode($photo));
+
+        $product->setPhoto($name);
         $product->setUserid($ouserid);
         $em = $this->getDoctrine()->getManager();
         $em->persist($product);

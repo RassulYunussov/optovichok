@@ -4,16 +4,19 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\oProduct;
 
+use AppBundle\Entity\oUser;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
  * Oproduct controller.
  *
  * @Route("/oproducts")
+ * @Security("has_role('ROLE_COMPANY')")
  */
 class oProductController extends Controller
 {
@@ -47,6 +50,10 @@ class oProductController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $oUser = new oUser();
+            $oUser = $this->get('security.token_storage')->getToken()->getUser();
+
             /**
              * @var UploadedFile $file
              */
@@ -56,7 +63,7 @@ class oProductController extends Controller
                 $this->getParameter('photo_directory'),
                 $fileName);
             $oProduct->setPhoto($fileName);
-
+            $oProduct->setUserid($oUser);
             $em = $this->getDoctrine()->getManager();
             $em->persist($oProduct);
             $em->flush();

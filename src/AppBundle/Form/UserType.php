@@ -10,6 +10,7 @@ namespace AppBundle\Form;
 
 use AppBundle\Entity\oUser;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -30,6 +31,7 @@ class UserType extends AbstractType
                 'second_options' => array('label' => 'Повторите Пароль'),
             ))
             ->add('role', null, array('label' => 'Роль'))
+            ->add('telephone', TextType::class, array('label' => 'Телефон'))
         ;
     }
 
