@@ -21,6 +21,26 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class oProductController extends Controller
 {
     /**
+     * @Route("/myproduct", name="my_product")
+     * @Method("GET")
+     */
+    public function myProductAction()
+    {
+        $oUser = $this->get('security.token_storage')->getToken()->getUser();
+
+        $em = $this->getDoctrine()->getManager();
+
+        $id = $em->getRepository('AppBundle:oUser')->find($oUser);
+        $query = $em->createQuery(
+            'SELECT p from AppBundle:oProduct p WHERE p.userid = :id')->setParameter('id', $id);
+        $security = $query->getResult();
+
+        return $this->render('AppBundle:oProduct:myproduct.html.twig', array(
+            'oProducts' => $security
+        ));
+    }
+
+    /**
      * Lists all oProduct entities.
      *
      * @Route("/", name="new_index")

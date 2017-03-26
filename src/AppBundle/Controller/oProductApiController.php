@@ -16,12 +16,29 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use FOS\RestBundle\View\View;
 use Doctrine\ORM\Tools\Pagination\Paginator;
+use AppBundle\Entity\oUser;
 
 /**
  * @Route("/api")
  */
 class oProductApiController extends FOSRestController
 {
+    /**
+     * @Rest\Get("/my_product")
+     */
+    public function myProductAction()
+    {
+        $user = new oUser();
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $em = $this->getDoctrine()->getEntityManager();
+        $id = $em->getRepository('AppBundle:oUser')->find($user);
+        $query = $em->createQuery(
+            'SELECT p from AppBundle:oProduct p WHERE p.userid = :id')->setParameter('id', $id);
+        $security = $query->getResult();
+
+        return $security;
+
+    }
     /**
      * @Rest\Get("/product_10")
      */

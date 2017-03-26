@@ -1,0 +1,32 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+
+        <table class="table table-bordered">
+            <tbody>
+                {% for oProduct in oProducts %}
+                        <tr>
+                            <th>Id</th>
+                            <td>{{ oProduct.id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Photo</th>
+                            <td>{{ oProduct.photo }}</td>
+                        </tr>
+                        <tr>
+                            <th>Header</th>
+                            <td>{{ oProduct.header }}</td>
+                        </tr>
+                        <tr>
+                            <th>Category</th>
+                            <td>{{ oProduct.category }}</td>
+                        </tr>
+                        <tr>
+                            <th>Description</th>
+                            <td>{{ oProduct.description }}</td>
+                        </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+{% endblock %}
