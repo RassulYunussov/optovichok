@@ -45,7 +45,7 @@ class oProductApiController extends FOSRestController
     public function paginatorAction()
     {
         $em = $this->getDoctrine()->getEntityManager();
-        $dql = "SELECT product FROM AppBundle:oProduct product";
+        $dql = "SELECT p FROM AppBundle:oProduct p";
         $query = $em->createQuery($dql)->setFirstResult(0)->setMaxResults(10);
 
         $myArray = $query->getArrayResult();
@@ -97,18 +97,20 @@ class oProductApiController extends FOSRestController
         $header = $request->get('header');
         $category = $request->get('category');
         $description = $request->get('description');
-        //$photo = $request->files->get('photo');
         $photo = $request->get('photo');
-        $userid = $request->get('user_id');
+        //$userid = $request->get('user_id');
+        $user = $this->get('security.token_storage')->getToken()->getUser();
+
 
         $em = $this->getDoctrine()->getManager();
+        //$id = $em->getRepository('AppBundle:oUser')->find($user);
 
         $query = $em->createQuery('SELECT productCategory FROM AppBundle:oProductCategory productCategory WHERE productCategory.nameCategory = :nameCategory')->setParameter('nameCategory', $category);
         $ocategory = $query->getSingleResult();
-        $query1 = $em->createQuery('SELECT id FROM AppBundle:oUser id WHERE id.id = :id')->setParameter('id', $userid);
-        $ouserid = $query1->getSingleResult();
+        //$query1 = $em->createQuery('SELECT id FROM AppBundle:oUser id WHERE id.id = :id')->setParameter('id', $userid);
+        //$ouserid = $query1->getSingleResult();
 
-        if(empty($header) || empty($category) || empty($description) || empty($photo) || empty($userid))
+        if(empty($header) || empty($category) || empty($description) || empty($photo) /*|| empty($userid)*/)
         {
             return new View("NULL VALUES ARE NOT ALLOWED", Response::HTTP_NOT_ACCEPTABLE );
         }
@@ -122,7 +124,7 @@ class oProductApiController extends FOSRestController
         file_put_contents($dir, base64_decode($photo));
 
         $product->setPhoto($name);
-        $product->setUserid($ouserid);
+        $product->setUserid($user);
         $em = $this->getDoctrine()->getManager();
         $em->persist($product);
         $em->flush();
@@ -139,7 +141,6 @@ class oProductApiController extends FOSRestController
         $category = $request->get('category');
         $description = $request->get('description');
         $photo = $request->get('photo');
-        $userid = $request->get('user_id');
         $sn = $this->getDoctrine()->getManager();
         $product = $this->getDoctrine()->getRepository('AppBundle:oProduct')->find($id);
 
@@ -147,19 +148,16 @@ class oProductApiController extends FOSRestController
 
         $query = $em->createQuery('SELECT productCategory FROM AppBundle:oProductCategory productCategory WHERE productCategory.id = :id')->setParameter('id', $category);
         $ocategory = $query->getSingleResult();
-        $query1 = $em->createQuery('SELECT id FROM AppBundle:oUser id WHERE id.id = :id')->setParameter('id', $userid);
-        $ouserid = $query1->getSingleResult();
 
         if (empty($product)) {
             return new View("Product not found", Response::HTTP_NOT_FOUND);
         }
-        elseif(!empty($header) && !empty($description) && !empty($photo) && !empty($category) && !empty($userid)){
+        elseif(!empty($header) && !empty($description) && !empty($photo) && !empty($category)){
             $product->setHeader($header);
             $product->setCategory($ocategory);
             $product->setDescription($description);
             $base64 = base64_decode($photo);
             $product->setPhoto($base64);
-            $product->setUserid($ouserid);
             $sn->flush();
             return new View("Product Updated Successfully", Response::HTTP_OK);
         }

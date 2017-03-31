@@ -13,12 +13,13 @@
                 {{ form_row(form.category) }}
                 {{ form_row(form.description) }}
                 {{ form_row(form.photo) }}
+                {{ form_row(form.price) }}
                 <p class="help-block">Выберите фотографию для вашего объявления, пожалуйста.</p>
                 <button type="submit" class="btn btn-primary btn-lg active">Опубликовать</button>
                 {{ form_end(form) }}
                 <ul>
                         <li>
-                                <a href="{{ path('new_index') }}">Back to the list</a>
+                                <a href="{{ path('all_index') }}">Back to the list</a>
                         </li>
                 </ul>
         </div>

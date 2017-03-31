@@ -12,16 +12,29 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
-/**
- * Oproduct controller.
- *
- * @Route("/oproducts")
- * @Security("has_role('ROLE_COMPANY')")
- */
 class oProductController extends Controller
 {
     /**
-     * @Route("/myproduct", name="my_product")
+     * @Route("/", name="home_page")
+     * @Method("GET")
+     */
+    public function paginationAction(){
+        $em = $this->getDoctrine()->getEntityManager();
+        $dql = "SELECT p FROM AppBundle:oProduct p";
+        $query = $em->createQuery($dql)->setFirstResult(0)->setMaxResults(4);
+        $oProducts = $query->getResult();
+
+        $oProductCategorys = $em->getRepository('AppBundle:oProductCategory')->findAll();
+
+        return $this->render('AppBundle:oProduct:index.html.twig', array(
+           'oProducts' => $oProducts,
+           'oProductCategorys' => $oProductCategorys,
+        ));
+    }
+
+
+    /**
+     * @Route("/oproducts/myproduct", name="my_product")
      * @Method("GET")
      */
     public function myProductAction()
@@ -43,7 +56,7 @@ class oProductController extends Controller
     /**
      * Lists all oProduct entities.
      *
-     * @Route("/", name="new_index")
+     * @Route("/all", name="all_index")
      * @Method("GET")
      */
     public function indexAction()
@@ -52,7 +65,7 @@ class oProductController extends Controller
 
         $oProducts = $em->getRepository('AppBundle:oProduct')->findAll();
 
-        return $this->render('AppBundle:oProduct:index.html.twig', array(
+        return $this->render('AppBundle:oProduct:all_index.html.twig', array(
             'oProducts' => $oProducts,
         ));
     }
@@ -60,8 +73,9 @@ class oProductController extends Controller
     /**
      * Creates a new oProduct entity.
      *
-     * @Route("/new", name="new_new")
+     * @Route("/oproducts/new", name="new_new")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_COMPANY')")
      */
     public function newAction(Request $request)
     {
@@ -100,15 +114,17 @@ class oProductController extends Controller
     /**
      * Finds and displays a oProduct entity.
      *
-     * @Route("/{id}", name="new_show")
+     * @Route("/oproducts/{id}", name="new_show")
      * @Method("GET")
      */
     public function showAction(oProduct $oProduct)
     {
+        $em = $this->getDoctrine()->getManager();
         $deleteForm = $this->createDeleteForm($oProduct);
-
+        $oUsers = $em->getRepository('AppBundle:oUser')->findAll();
         return $this->render('AppBundle:oProduct:show.html.twig', array(
             'oProduct' => $oProduct,
+            'oUsers' => $oUsers,
             'delete_form' => $deleteForm->createView(),
         ));
     }
@@ -116,8 +132,9 @@ class oProductController extends Controller
     /**
      * Displays a form to edit an existing oProduct entity.
      *
-     * @Route("/{id}/edit", name="new_edit")
+     * @Route("/oproducts/{id}/edit", name="new_edit")
      * @Method({"GET", "POST"})
+     * @Security("has_role('ROLE_COMPANY')")
      */
     public function editAction(Request $request, oProduct $oProduct)
     {
@@ -141,8 +158,9 @@ class oProductController extends Controller
     /**
      * Deletes a oProduct entity.
      *
-     * @Route("/{id}", name="new_delete")
+     * @Route("/oproducts/{id}", name="new_delete")
      * @Method("DELETE")
+     * @Security("has_role('ROLE_COMPANY')")
      */
     public function deleteAction(Request $request, oProduct $oProduct)
     {

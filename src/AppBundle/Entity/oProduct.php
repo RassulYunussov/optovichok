@@ -61,6 +61,13 @@ class oProduct
      */
     private $userid;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="price", type="string", nullable=false)
+     */
+    private $price;
+
 
     /**
      * @return \AppBundle\Entity\oUser
@@ -162,5 +169,22 @@ class oProduct
     public function setDescription($description)
     {
         $this->description = $description;
+    }
+
+
+    /**
+     * @return string
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param string $price
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
     }
 }

@@ -23,15 +23,15 @@ use AppBundle\Entity\oUser;
 class oUserApiController extends FOSRestController
 {
     /**
-     * @Rest\Post("/token")
+     * @Rest\Get("/token")
      */
     public function newTokenAction(Request $request)
     {
-        $user = $this->getDoctrine()
-            ->getRepository('AppBundle:oUser')
-            ->findOneBy(['username' => $request->getUser()]);
+        $email = $request->get('email');
+        $password = $request->get('password');
 
-        return new JsonResponse($user);
+
+        return $user;
     }
 
     /**

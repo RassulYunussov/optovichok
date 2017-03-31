@@ -2,31 +2,19 @@
 
 {% block body %}
 
-        <table class="table table-bordered">
-            <tbody>
-                {% for oProduct in oProducts %}
-                        <tr>
-                            <th>Id</th>
-                            <td>{{ oProduct.id }}</td>
-                        </tr>
-                        <tr>
-                            <th>Photo</th>
-                            <td>{{ oProduct.photo }}</td>
-                        </tr>
-                        <tr>
-                            <th>Header</th>
-                            <td>{{ oProduct.header }}</td>
-                        </tr>
-                        <tr>
-                            <th>Category</th>
-                            <td>{{ oProduct.category }}</td>
-                        </tr>
-                        <tr>
-                            <th>Description</th>
-                            <td>{{ oProduct.description }}</td>
-                        </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    {% for oProduct in oProducts %}
+        <section id="product_section">
+            <div class="col">
+                <div class="col-sm-6 col-md-3">
+                    <div class="thumbnail">
+                        <a href="{{ path('new_show', { 'id': oProduct.id }) }}"><img class="image1" src="{{ asset('uploads/' ~ oProduct.photo) }}" alt="{{ oProduct.header }}"></a>
+                        <div class="caption">
+                            <a href="{{ path('new_show', { 'id': oProduct.id }) }}"><h4>{{ oProduct.header }}</h4></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endfor %}
 
 {% endblock %}

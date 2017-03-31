@@ -21,26 +21,22 @@ class oCompanyController extends Controller
 {
     /**
      * @Route("/company_page", name="company_page")
+     * @Method("GET")
      */
     public function companyAction()
     {
-        return $this->render('AppBundle:oCompany:company_page.html.twig');
-    }
-
-    /**
-     * @Route("/product", name="product_index")
-     * @Method("GET")
-     */
-    public function productIndex()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $em1 = $this->getDoctrine()->getEntityManager();
         $user = $this->get('security.token_storage')->getToken()->getUser();
-        $userProduct = $em->getRepository('AppBundle:oProduct')->findBy(array('product'=>$user->getUserid()));
-        $count = $em1->createQuery('SELECT count(product) from AppBundle:oProduct product where product.userid = :userid')->setParameter('userid',$user->getUserid())->getSingleScalarResult();
-        return $this->render('AppBundle:oCompany:user_products.html.twig', array(
-            'userProduct'=>$userProduct,
-            'count' => $count
+
+        $em = $this->getDoctrine()->getManager();
+
+        $id = $em->getRepository('AppBundle:oUser')->find($user);
+        $query = $em->createQuery(
+            'SELECT p from AppBundle:oUser p WHERE p.id = :id')->setParameter('id', $id);
+        $oUsers = $query->getResult();
+
+
+        return $this->render('AppBundle:oCompany:company_page.html.twig', array(
+            'oUsers' => $oUsers,
         ));
     }
 }

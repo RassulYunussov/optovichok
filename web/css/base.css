@@ -35,11 +35,23 @@ body { line-height: 1;font-family: Arial, Helvetica, sans-serif;font-size: 12px;
 
 .photo-input-company {position: relative;}
 .upload-photos-company {position: relative;}
+.ul_class {margin-left: 115px; margin-right: 15px; position: relative;}
+.ul_class li {display: inline; margin-left: 15px;}
 
 #search-container .search-container-div {margin-top: 20px; border-bottom: 1px solid #ccc; padding-bottom: 40px;}
 
+.ad-ad {text-align: center;}
+
+.image_my {height: 200px; width: 200px;}
+
+.all_index_div {position: relative; float: right; margin-bottom: 10px;}
+
 #main-body { margin-top: 20px; margin-bottom: 20px;}
 #product_section {margin-top: 20px;}
+.border_li_li {border: 1px solid #ccc;}
+
+.div1_show {border: 1px solid #CCCCCC; border-radius: 5px; height: 180px;}
+.div2_show {border: 1px solid #CCCCCC; border-radius: 5px; height: 180px;}
 
 .image1 {height: 960px; width: 1280px;}
 

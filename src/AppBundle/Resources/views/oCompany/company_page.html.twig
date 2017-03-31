@@ -1,8 +1,11 @@
 {% extends 'AppBundle::base.html.twig' %}
 
+
 {% block body %}
 
-    <h2>Welcome to company page!</h2>
+    {% for oUser in oUsers %}
+    <h2>Welcome {{ oUser.username }}!</h2>
+        {% endfor %}
     <h4>Здесь вы можете добавить продукт!</h4>
         <ul>
             <li>
