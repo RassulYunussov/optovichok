@@ -1,22 +1,32 @@
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,embed,figure,figcaption,footer,header,hgroup,menu,nav,output,ruby,section,summary,time,mark,audio,video{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0}article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:none}table{border-collapse:collapse;border-spacing:0}
 
-body { line-height: 1;font-family: Arial, Helvetica, sans-serif;font-size: 12px; width: 100%; height: 100%; color: #000; font-size: 14px; }
+body { line-height: 1;font-family: Arial, Helvetica, sans-serif; font-size: 12px; width: 100%; height: 100%; color: #000; font-size: 14px; }
 
 #bc1 {margin-bottom: 20px;}
 .OK {color: #FF0000}
 
-#wrapper { margin: 10px auto; width: 1000px; }
+#wrapper { margin: 10px auto;}
 #wrapper a { text-decoration: none; }
 #wrapper span.highlight { color: #F48A00; border-bottom: 1px solid #ccc;}
 
-#header {border-bottom: 1px solid #ccc;}
+#header {border-bottom: 1px solid #ccc; width: 1170px; height: 50px; margin-left: 300px; margin-right: 300px; }
 #body-blog-body {height: auto;}
 
 
+.all_index_div a {
+    color: #000080; /* Цвет обычной ссылки */
+    padding: 2px; /* Поля вокруг текста */
+}
+.all_index_div a:hover {
+    text-decoration: none; /* Убираем подчеркивание */
+    color: #fff; /* Цвет ссылки при наведении на нее курсора мыши */
+    background: #0098d0; /* Цвет фона */
+}
+
 
 #main-body {padding-top: 20px;}
-#main-body image {width: 200px; height: 200px;}
 
+#body-blog-body {width: 1170px; margin-left: 300px; margin-right: 300px;}
 #body-blog-body label {margin-right: 10px; font-family: "Arial"; font-size: 14px;}
 #body-blog-body .registr-form-registr { margin: 50px; margin-left: 400px; }
 #body-blog-body .login-input-registr {margin-left: 10px;}
@@ -32,17 +42,35 @@ body { line-height: 1;font-family: Arial, Helvetica, sans-serif;font-size: 12px;
 #body-blog-body #company-page-ad { margin-top: 30px; margin-bottom: 30px; margin-left: 250px; margin-right: 250px;  }
 #body-blog-body #auth-page { margin-top: 30px; margin-bottom: 10px;}
 #body-blog-body .div-ad-ad {border-bottom: 1px solid #ccc;}
+#main-body {width: 1000px; margin-right: 300px; padding-top: 80px;}
+#auth-page {width: 1000px; margin-right: 300px; padding-top: 80px;}
+.company_page { margin-left: 25px; margin-right: 300px; padding-top: 80px;}
+#product_section  { width: 1000px; margin-right: 300px; }
+.product_section_2 {width: 1000px; height: auto; border-bottom: 1px solid #CCCCCC; border-left: 1px solid #CCCCCC; border-right: 1px solid #CCCCCC; margin-bottom: 200px;}
+.show_all {width: 1000px; margin-right: 300px; }
+#product_section image {width: 25%; height: 25%;}
+.product_body { margin-top: 15px; border-top: 1px solid #CCCCCC; display: inline-block;}
+
+.container_category {margin-top: 100px;}
+.image2 {width: 30%; height: 30%}
+.setting-table {margin: 10px;}
+.product_image .image1 {width: 100%; height: 100%; margin-top: 10px;}
+.product_information {width: 50%; border: 1px solid #CCCCCC; margin-top: 10px;}
+.product_header {padding-left: 10px; margin-top: 5px; border-top: 1px solid #CCCCCC;  }
+.product_descrition {border-top: 1px solid #CCCCCC; padding-left: 10px;}
+
+.user_information_price {width: 50%;}
 
 .photo-input-company {position: relative;}
 .upload-photos-company {position: relative;}
-.ul_class {margin-left: 115px; margin-right: 15px; position: relative;}
-.ul_class li {display: inline; margin-left: 15px;}
 
-#search-container .search-container-div {margin-top: 20px; border-bottom: 1px solid #ccc; padding-bottom: 40px;}
+.li_fleft {width: 30%; position: relative; float: left; display: block; padding-left: 40px; padding-right: 12px; margin-top: 15px; margin-bottom: 15px;}
+.item_item {display: table;}
+
+.header_1 {margin-left: 300px; margin-right: 300px;}
+#search-container { padding-bottom: 40px; padding-top: 40px; margin-left: 300px; margin-right: 300px; width: 1170px;}
 
 .ad-ad {text-align: center;}
-
-.image_my {height: 200px; width: 200px;}
 
 .all_index_div {position: relative; float: right; margin-bottom: 10px;}
 
@@ -53,67 +81,4 @@ body { line-height: 1;font-family: Arial, Helvetica, sans-serif;font-size: 12px;
 .div1_show {border: 1px solid #CCCCCC; border-radius: 5px; height: 180px;}
 .div2_show {border: 1px solid #CCCCCC; border-radius: 5px; height: 180px;}
 
-.image1 {height: 960px; width: 1280px;}
-
 #footer { border-top: 1px solid #ccc; clear: both; text-align: center; padding: 10px; color: #aaa; }
-
-.file-upload {
-    position: relative;
-    height: 32px;
-    margin-bottom: 15px;
-    width: 40%;
-    cursor: pointer;
-    font-size: 14px;
-    font-family: sans-serif;
-    line-height: 1.42857143;
-    color: #555;
-}
-
-.file-upload:after {
-    content: "Обзор";
-    position: absolute;
-    display: block;
-    top: 0;
-    right: 0;
-    z-index: 5;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 0 4px 4px 0;
-    padding: 6px 12px;
-    color: #333;
-}
-.file-upload:hover:after {
-    color: #333;
-    background-color: #e6e6e6;
-    border-color: #adadad;
-}
-
-.file-upload:active:after {
-    outline: 0;
-    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
-    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
-}
-
-.file-upload:before {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 3;
-    display: block;
-    width: calc(100% - 40px);
-    padding: 6px 12px;
-    background-color: #fff;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.file-upload input {
-    position: absolute;
-    display: block;
-    top: 0;
-    height: 100%;
-    z-index: 99;
-    width: 100%;
-    opacity: 0;
-}

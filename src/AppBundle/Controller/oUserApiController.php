@@ -31,7 +31,7 @@ class oUserApiController extends FOSRestController
         $password = $request->get('password');
 
 
-        return $user;
+        //return $user;
     }
 
     /**
@@ -44,14 +44,20 @@ class oUserApiController extends FOSRestController
         $password = $request->get('password');
 
         $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery('SELECT id FROM AppBundle:oUser id WHERE id.email = :email')->setParameter('email', $email)->getSingleResult();
+        $query = $em->createQuery('SELECT p FROM AppBundle:oUser p WHERE p.email = :email')->setParameter('email', $email);
+        $userEmail = $query->getResult();
+        $query2 = $em->createQuery('SELECT p FROM AppBundle:oUser p WHERE p.password = :password')->setParameter('password', $password);
+        $userPassword = $query2->getResult();
 
-        if($query == null)
+        if($userEmail && $userPassword)
         {
-            return new View("user not found", Response::HTTP_NOT_FOUND);
+            return $userEmail;
         }
-        return new View("User Authenticated", Response::HTTP_OK);
+        return new View("user not found", Response::HTTP_NOT_FOUND);
+
+
     }
+
     /**
      *
      * @Rest\Get("/user")
@@ -95,19 +101,13 @@ class oUserApiController extends FOSRestController
         $query = $em->createQuery('SELECT role FROM AppBundle:oRole role WHERE role.id = :id')->setParameter('id', $role);
         $orole = $query->getSingleResult();
 
-        $query1 = $em->createQuery('SELECT email FROM AppBundle:oUser email WHERE email.email = :email')->setParameter('email', $email);
-
         if(empty($email) || empty($username) || empty($password) || empty($role) || empty($telephone))
         {
             return new View("NULL VALUES ARE NOT ALLOWED", Response::HTTP_NOT_ACCEPTABLE);
         }
-        if($query1)
-        {
-            return new View('This email is busy', Response::HTTP_NOT_ACCEPTABLE);
-        }
         $oUser->setEmail($email);
         $oUser->setUsername($username);
-        $password = $this->get('security.password_encoder')->encodePassword($oUser, $oUser->getPassword());
+        $password = $this->get('security.password_encoder')->encodePassword($oUser, $password);
 
         $oUser->setPassword($password);
         $oUser->setRole($orole);

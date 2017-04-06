@@ -19,7 +19,7 @@ class oProductController extends Controller
      * @Method("GET")
      */
     public function paginationAction(){
-        $em = $this->getDoctrine()->getEntityManager();
+        $em = $this->getDoctrine()->getManager();
         $dql = "SELECT p FROM AppBundle:oProduct p";
         $query = $em->createQuery($dql)->setFirstResult(0)->setMaxResults(4);
         $oProducts = $query->getResult();
@@ -34,7 +34,7 @@ class oProductController extends Controller
 
 
     /**
-     * @Route("/oproducts/myproduct", name="my_product")
+     * @Route("/oproducts/company_page", name="company_page")
      * @Method("GET")
      */
     public function myProductAction()
@@ -121,7 +121,13 @@ class oProductController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $deleteForm = $this->createDeleteForm($oProduct);
-        $oUsers = $em->getRepository('AppBundle:oUser')->findAll();
+
+        $userId = $oProduct->getUserid();
+
+        $query = $em->createQuery('SELECT p FROM AppBundle:oUser p WHERE p.id = :userId')->setParameter('userId', $userId);
+        $oUsers = $query->getResult();
+
+
         return $this->render('AppBundle:oProduct:show.html.twig', array(
             'oProduct' => $oProduct,
             'oUsers' => $oUsers,

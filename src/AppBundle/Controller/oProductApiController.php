@@ -24,6 +24,23 @@ use AppBundle\Entity\oUser;
 class oProductApiController extends FOSRestController
 {
     /**
+     * @Rest\Post("/search/")
+     */
+    public function searchAction(Request $request){
+
+        $header = $request->request->get('header');
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->createQuery('SELECT p FROM AppBundle:oProduct p WHERE p.header LIKE :header')->setParameter('header', $header);
+        $product = $query->getResult();
+
+        if($product){
+            return $product;
+        }
+        return new View("Product not found", Response::HTTP_NOT_FOUND);
+    }
+
+    /**
      * @Rest\Get("/my_product")
      */
     public function myProductAction()
@@ -39,17 +56,21 @@ class oProductApiController extends FOSRestController
         return $security;
 
     }
+
     /**
-     * @Rest\Get("/product_10")
+     * @Rest\Get("/product/{id}")
      */
     public function paginatorAction()
     {
-        $em = $this->getDoctrine()->getEntityManager();
-        $dql = "SELECT p FROM AppBundle:oProduct p";
-        $query = $em->createQuery($dql)->setFirstResult(0)->setMaxResults(10);
+        $em = $this->getDoctrine()->getManager();
+        $id = $_GET["id"];
+        $query = $em->createQuery('SELECT p FROM AppBundle:oProduct p WHERE p.id BETWEEN ($id+1) AND ($id+10)');
+        $result = $query->getResult();
 
-        $myArray = $query->getArrayResult();
-        return new JsonResponse($myArray);
+        while ($row = mysqli_fetch_assoc($result)) {
+            $array[] = $row;
+        }
+        return $array;
     }
 
     /**

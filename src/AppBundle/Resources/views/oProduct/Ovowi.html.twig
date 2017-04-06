@@ -1,0 +1,20 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <div class="container_category">
+                <div class="product_section_2">
+                    <table class="table">
+                        <tbody>
+                        {% for oProduct in oProducts %}
+                            <tr>
+                                <td><img class="image2" src="{{ asset('uploads/' ~ oProduct.photo) }}" alt="{{ oProduct.header }}"></td>
+                                <td><a href="{{ path('new_show', { 'id': oProduct.id }) }}">{{ oProduct.header }}</a></td>
+                                <td>{{ oProduct.category }}</td>
+                                <td>{{ oProduct.price }} тг.</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+    </div>
+{% endblock %}

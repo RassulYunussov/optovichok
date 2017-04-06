@@ -2,35 +2,48 @@
 
 {% block body %}
 
-    <section id="product_section">
-        <div class="col">
-            <div class="col-sm-4 col-md-4">
-                <div class="thumbnail">
-                    <img class="image1" src="{{ asset('uploads/' ~ oProduct.photo) }}" alt="{{ oProduct.header }}">
-                </div>
+    <div class="product_body">
+        <div class="product_information">
+            <div class="product_image">
+                <img class="image1" src="{{ asset('uploads/' ~ oProduct.photo) }}" alt="{{ oProduct.header }}">
             </div>
-            <div class="col-sm-4 col-md-4">
-                <div class="div1_show">
-                    <div><h2>{{ oProduct.header }}</h2></div>
-                    <div><h4>{{ oProduct.description }}</h4></div>
-                    <div><h3>{{ oProduct.price }} тг.</h3></div>
-                    <ul>
-                        <li class="border_li">
-                            <a href="{{ path('all_index') }}">Назад</a>
-                        </li>
-                    </ul>
-                </div>
+            <div class="product_header">
+                <h2>{{ oProduct.header }}</h2>
             </div>
-            <div class="col-sm-4 col-md-4">
-                <div class="div2_show">
-                    {% for oUser in oUsers %}
-                        <div><h3>{{ oUser.username }}</h3></div>
-                        <div><h4>+{{ oUser.telephone }}</h4></div>
-                    {% endfor %}
-                </div>
+            <div class="product_descrition">
+                <p>{{ oProduct.description }}</p>
             </div>
-
         </div>
-    </section>
+        <div class="user_information_price">
+            <div class="product_price">
+                <h3>{{ oProduct.price }}</h3>
+            </div>
+            {% for oUser in oUsers %}
+            <div class="product_user">
+                <h3>{{ oUser.Username }}</h3>
+            </div>
+            <div class="product_user_telephone">
+                <h3>{{ oUser.telephone }}</h3>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="product_back"><a href="{{ path('all_index') }}">Назад</a></div>
+    </div>
 
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

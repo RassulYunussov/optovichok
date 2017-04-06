@@ -1,33 +1,76 @@
 {% extends 'AppBundle::base.html.twig' %}
 
     {% block category %}
+        <div class="jumbotron">
         <section id="search-container">
-            <div class="search-container-div">
                 <div class="row">
-                    <ul class="ul_class">
-                        <li><a href="#"><img src="photo/1.jpg" alt="..." class="img-circle"> Категория 1</a></li>
-                        <li><a href="#"><img src="photo/1.jpg" alt="..." class="img-circle"> Категория 2</a></li>
-                        <li><a href="#"><img src="photo/1.jpg" alt="..." class="img-circle"> Категория 3</a></li>
-                        <li><a href="#"><img src="photo/1.jpg" alt="..." class="img-circle"> Категория 4</a></li>
-                        <li><a href="#"><img src="photo/1.jpg" alt="..." class="img-circle"> Категория 5</a></li>
-                    </ul>
-                    <ul class="ul_class">
-                        <li><a href="#"><img src="photo/1.jpg" alt="..." class="img-circle"> Категория 6</a></li>
-                        <li><a href="#"><img src="photo/1.jpg" alt="..." class="img-circle"> Категория 7</a></li>
-                        <li><a href="#"><img src="photo/1.jpg" alt="..." class="img-circle"> Категория 8</a></li>
-                        <li><a href="#"><img src="photo/1.jpg" alt="..." class="img-circle"> Категория 9</a></li>
-                        <li><a href="#"><img src="photo/1.jpg" alt="..." class="img-circle"> Категория 10</a></li>
-                    </ul>
+                        <div class="li_fleft">
+                            <div class="item_item">
+                                <a href="{{ path('category_ovowi') }}">
+                                    <span class="cat-icon cat-icon-circle cat-icon-6">
+                                       <img src="photo/broccoli.png">
+                                    </span>
+                                    <span class="span_ovowi">Овощи</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="li_fleft">
+                            <div class="item_item">
+                                <a href="{{ path('category_fructi') }}">
+                                        <span class="cat-icon cat-icon-circle cat-icon-6">
+                                           <img src="photo/watermelon.png">
+                                        </span>
+                                    <span class="span_ovowi">Фрукты и ягоды</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="li_fleft">
+                            <div class="item_item">
+                                <a href="#"><img src="photo/milk.png">
+                                    <span class="span_ovowi">Молочные изделия</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="li_fleft">
+                            <div class="item_item">
+                                <a href="#">
+                                        <span class="cat-icon cat-icon-circle cat-icon-6">
+                                           <img src="photo/doughnut.png">
+                                        </span>
+                                        <span class="span_ovowi">Кондитерские изделия</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="li_fleft">
+                            <div class="item_item">
+                                <a href="#">
+                                        <span class="cat-icon cat-icon-circle cat-icon-6">
+                                           <img src="photo/steak.png">
+                                        </span>
+                                    <span class="span_ovowi">Мясо</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="li_fleft">
+                            <div class="item_item">
+                                <a href="#">
+                                            <span class="cat-icon cat-icon-circle cat-icon-6">
+                                               <img src="photo/baguette.png">
+                                            </span>
+                                    <span class="span_ovowi">Хлеб, сдоба</span>
+                                </a>
+                            </div>
+                        </div>
                 </div><!-- /.row -->
-            </div>
         </section>
+        </div>
     {% endblock %}
 
     {% block body %}
         {% for oProduct in oProducts %}
         <section id="product_section">
             <div class="col">
-                <div class="col-sm-6 col-md-3">
+                <div class="col-sm-3 col-md-3">
                     <div class="thumbnail">
                         <a href="{{ path('new_show', { 'id': oProduct.id }) }}"><img class="image1" src="{{ asset('uploads/' ~ oProduct.photo) }}" alt="{{ oProduct.header }}"></a>
                         <div class="caption">
@@ -39,9 +82,11 @@
             </div>
         </section>
         {% endfor %}
+        <div class="show_all">
         <div class="col-sm-12 col-md-12">
             <div class="all_index_div">
-                <a href="{{ path('all_index') }}">Посмотреть все ></a>
+                <a href="{{ path('all_index') }}">Посмотреть все <span class="glyphicon glyphicon-chevron-right"></span></a>
             </div>
+        </div>
         </div>
     {% endblock %}
