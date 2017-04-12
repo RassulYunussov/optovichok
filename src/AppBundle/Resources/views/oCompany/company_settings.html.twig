@@ -1,0 +1,72 @@
+{% extends 'AppBundle::base.html.twig' %}
+{#{% form_theme change_form 'bootstrap_3_layout.html.twig' %}#}
+
+{% block body %}
+    <div id="page_company">
+        <div class="container">
+            <h3>Настройки</h3>
+            <p class="help-block">Здесь вы можете изменять настройки своей учётной записи</p>
+
+            <ul class="nav nav-tabs">
+                <li><a  href="{{ path('company_page') }}">Объявления</a></li>
+                <li class="active"><a href="{{ path('setting_page') }}">Настройки</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="home" class="tab-pane fade in active">
+                    <div class="product_section_2">
+                        <div class="setting-table">
+                            <table class="table">
+                                <tbody>
+                                <tr class="active">
+                                    <td>
+                                        <details>
+                                            <summary>Изменить контактные данные</summary>
+                                            <br>
+                                            <p>Изменения контактных данных</p>
+                                        </details>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <details>
+                                            <summary>Изменить пароль</summary>
+                                            <br>
+                                            <div class="col-md-12 col-md-offset-0">
+                                                <div id="company-page-ad">
+                                                   {# {{ form_start(change_form) }}
+                                                        {{ form_widget(change_form.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder':'Пароль'}}) }}
+                                                        {{ form_widget(change_form.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder':'Повторите пароль'}}) }}
+                                                    <button type="submit" class="btn btn-primary btn-lg active">Изменить</button>
+                                                    {{ form_end(change_form) }}#}
+                                                </div>
+                                            </div>
+                                        </details>
+                                    </td>
+                                </tr>
+                                <tr class="active">
+                                    <td>
+                                        <details>
+                                            <summary>Изменить E-mail</summary>
+                                            <br>
+                                            <p>Изменения E-mail</p>
+                                        </details>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="last_td">
+                                        <details>
+                                            <summary>Удалить учетную запись</summary>
+                                            <br>
+                                            <p>Удаление учетной записи</p>
+                                        </details>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

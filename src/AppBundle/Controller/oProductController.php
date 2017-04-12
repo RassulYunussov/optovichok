@@ -8,9 +8,14 @@ use AppBundle\Entity\oUser;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class oProductController extends Controller
 {
@@ -21,7 +26,7 @@ class oProductController extends Controller
     public function paginationAction(){
         $em = $this->getDoctrine()->getManager();
         $dql = "SELECT p FROM AppBundle:oProduct p";
-        $query = $em->createQuery($dql)->setFirstResult(0)->setMaxResults(4);
+        $query = $em->createQuery($dql)->setFirstResult(0)->setMaxResults(12);
         $oProducts = $query->getResult();
 
         $oProductCategorys = $em->getRepository('AppBundle:oProductCategory')->findAll();
@@ -29,27 +34,6 @@ class oProductController extends Controller
         return $this->render('AppBundle:oProduct:index.html.twig', array(
            'oProducts' => $oProducts,
            'oProductCategorys' => $oProductCategorys,
-        ));
-    }
-
-
-    /**
-     * @Route("/oproducts/company_page", name="company_page")
-     * @Method("GET")
-     */
-    public function myProductAction()
-    {
-        $oUser = $this->get('security.token_storage')->getToken()->getUser();
-
-        $em = $this->getDoctrine()->getManager();
-
-        $id = $em->getRepository('AppBundle:oUser')->find($oUser);
-        $query = $em->createQuery(
-            'SELECT p from AppBundle:oProduct p WHERE p.userid = :id')->setParameter('id', $id);
-        $security = $query->getResult();
-
-        return $this->render('AppBundle:oProduct:myproduct.html.twig', array(
-            'oProducts' => $security
         ));
     }
 
@@ -65,7 +49,7 @@ class oProductController extends Controller
 
         $oProducts = $em->getRepository('AppBundle:oProduct')->findAll();
 
-        return $this->render('AppBundle:oProduct:all_index.html.twig', array(
+        return $this->render('AppBundle:Categories:all.html.twig', array(
             'oProducts' => $oProducts,
         ));
     }
@@ -144,42 +128,60 @@ class oProductController extends Controller
      */
     public function editAction(Request $request, oProduct $oProduct)
     {
-        $deleteForm = $this->createDeleteForm($oProduct);
-        $editForm = $this->createForm('AppBundle\Form\oProductType', $oProduct);
+        $editForm = $this->createFormBuilder($oProduct)
+            ->add('header', TextType::class, array('label' => 'Название продукта'))
+            ->add('category', null, array('label' => 'Категория'))
+            ->add('description', TextareaType::class, array('label'=>'Описание'))
+            ->add('photo', FileType::class, array(
+                'label' => 'Фотография',
+                'data_class' => null,
+            ))
+            ->add('price', TextType::class, array('label' => 'Цена'))
+            ->getForm();
+
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
 
-            return $this->redirectToRoute('new_edit', array('id' => $oProduct->getId()));
+            $em = $this->getDoctrine()->getManager();
+
+            /**
+             * @var UploadedFile $file
+             */
+            $file = $oProduct->getPhoto();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move(
+                $this->getParameter('photo_directory'),
+                $fileName);
+            $oProduct->setPhoto($fileName);
+            $oProduct = $editForm->getData();
+            $em->persist($oProduct);
+            $em->flush();
+
+            return $this->redirectToRoute('company_page');
         }
 
         return $this->render('AppBundle:oProduct:edit.html.twig', array(
             'oProduct' => $oProduct,
             'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
         ));
     }
 
     /**
      * Deletes a oProduct entity.
      *
-     * @Route("/oproducts/{id}", name="new_delete")
-     * @Method("DELETE")
+     * @Route("/oproducts/{id}/delete", name="new_delete")
+     * @Method({"GET", "POST", "DELETE"})
      * @Security("has_role('ROLE_COMPANY')")
      */
     public function deleteAction(Request $request, oProduct $oProduct)
     {
-        $form = $this->createDeleteForm($oProduct);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->remove($oProduct);
-            $em->flush($oProduct);
-        }
+            $product = $this->getDoctrine()->getRepository('AppBundle:oProduct')->find($oProduct);
+            $em->remove($product);
+            $em->flush();
 
-        return $this->redirectToRoute('new_index');
+        return $this->redirectToRoute('company_page');
     }
 
     /**

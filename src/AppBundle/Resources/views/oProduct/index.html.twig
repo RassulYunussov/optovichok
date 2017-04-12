@@ -10,7 +10,7 @@
                                     <span class="cat-icon cat-icon-circle cat-icon-6">
                                        <img src="photo/broccoli.png">
                                     </span>
-                                    <span class="span_ovowi">Овощи</span>
+                                    <span class="span_category">Овощи</span>
                                 </a>
                             </div>
                         </div>
@@ -20,14 +20,14 @@
                                         <span class="cat-icon cat-icon-circle cat-icon-6">
                                            <img src="photo/watermelon.png">
                                         </span>
-                                    <span class="span_ovowi">Фрукты и ягоды</span>
+                                    <span class="span_category">Фрукты и ягоды</span>
                                 </a>
                             </div>
                         </div>
                         <div class="li_fleft">
                             <div class="item_item">
                                 <a href="#"><img src="photo/milk.png">
-                                    <span class="span_ovowi">Молочные изделия</span>
+                                    <span class="span_category">Молочные изделия</span>
                                 </a>
                             </div>
                         </div>
@@ -37,7 +37,7 @@
                                         <span class="cat-icon cat-icon-circle cat-icon-6">
                                            <img src="photo/doughnut.png">
                                         </span>
-                                        <span class="span_ovowi">Кондитерские изделия</span>
+                                        <span class="span_category">Кондитерские изделия</span>
                                 </a>
                             </div>
                         </div>
@@ -47,7 +47,7 @@
                                         <span class="cat-icon cat-icon-circle cat-icon-6">
                                            <img src="photo/steak.png">
                                         </span>
-                                    <span class="span_ovowi">Мясо</span>
+                                    <span class="span_category">Мясо</span>
                                 </a>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                                             <span class="cat-icon cat-icon-circle cat-icon-6">
                                                <img src="photo/baguette.png">
                                             </span>
-                                    <span class="span_ovowi">Хлеб, сдоба</span>
+                                    <span class="span_category">Хлеб, сдоба</span>
                                 </a>
                             </div>
                         </div>
@@ -75,7 +75,7 @@
                         <a href="{{ path('new_show', { 'id': oProduct.id }) }}"><img class="image1" src="{{ asset('uploads/' ~ oProduct.photo) }}" alt="{{ oProduct.header }}"></a>
                         <div class="caption">
                             <a href="{{ path('new_show', { 'id': oProduct.id }) }}"><h4>{{ oProduct.header }}</h4></a>
-                            <a href="{{ path('new_show', { 'id': oProduct.id }) }}"><h4>{{ oProduct.price }}</h4></a>
+                            <a href="{{ path('new_show', { 'id': oProduct.id }) }}"><h4>{{ oProduct.price }} тг.</h4></a>
                         </div>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
         <div class="show_all">
         <div class="col-sm-12 col-md-12">
             <div class="all_index_div">
-                <a href="{{ path('all_index') }}">Посмотреть все <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <a href="{{ path('all_index') }}">Посмотреть все</a><span class="glyphicon glyphicon-chevron-right"></span>
             </div>
         </div>
         </div>

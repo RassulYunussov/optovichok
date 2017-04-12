@@ -29,9 +29,6 @@ class oUserApiController extends FOSRestController
     {
         $email = $request->get('email');
         $password = $request->get('password');
-
-
-        //return $user;
     }
 
     /**
@@ -42,20 +39,6 @@ class oUserApiController extends FOSRestController
     {
         $email = $request->get('email');
         $password = $request->get('password');
-
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery('SELECT p FROM AppBundle:oUser p WHERE p.email = :email')->setParameter('email', $email);
-        $userEmail = $query->getResult();
-        $query2 = $em->createQuery('SELECT p FROM AppBundle:oUser p WHERE p.password = :password')->setParameter('password', $password);
-        $userPassword = $query2->getResult();
-
-        if($userEmail && $userPassword)
-        {
-            return $userEmail;
-        }
-        return new View("user not found", Response::HTTP_NOT_FOUND);
-
-
     }
 
     /**

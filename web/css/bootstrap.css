@@ -1122,7 +1122,7 @@ img {
 .carousel-inner > .item > a > img {
   display: block;
   max-width: 100%;
-  height: auto;
+  height: 160px;
 }
 .img-rounded {
   border-radius: 6px;
@@ -2912,6 +2912,7 @@ select[multiple].input-lg {
   margin-top: 5px;
   margin-bottom: 10px;
   color: #737373;
+  font-size: 14px;
 }
 @media (min-width: 768px) {
   .form-inline .form-group {
@@ -3989,7 +3990,7 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
 .nav > li > a:hover,
 .nav > li > a:focus {
   text-decoration: none;
-  background-color: #eee;
+
 }
 .nav > li.disabled > a {
   color: #777;
@@ -4959,8 +4960,6 @@ a.badge:focus {
 }
 .jumbotron {
   padding-top: 30px;
-  padding-bottom: 30px;
-  margin-bottom: 30px;
   color: inherit;
   background-color: #eee;
 }
@@ -4988,7 +4987,6 @@ a.badge:focus {
 @media screen and (min-width: 768px) {
   .jumbotron {
     padding-top: 48px;
-    padding-bottom: 48px;
   }
   .container .jumbotron,
   .container-fluid .jumbotron {
@@ -5452,8 +5450,8 @@ button.list-group-item-danger.active:focus {
 .panel {
   margin-bottom: 20px;
   background-color: #fff;
-  border: 1px solid transparent;
-  border-radius: 4px;
+  border: 2px solid transparent;
+  border-radius: 6px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
           box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
 }

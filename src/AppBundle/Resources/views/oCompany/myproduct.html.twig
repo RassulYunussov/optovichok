@@ -1,0 +1,52 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+<div id="page_company">
+    <div class="container">
+        <h3>Объявления</h3>
+        <p class="help">Здесь вы найдете ваши объявления</p>
+
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="{{ path('company_page') }}">Объявления</a></li>
+            <li><a href="{{ path('setting_page') }}">Настройки</a></li>
+            <div class="button_add_ad">
+                <a href="{{ path('new_new') }}"><button type="button" class="btn btn-info">
+                    <span class="glyphicon glyphicon-plus"> </span>
+                    Подать объявление
+                </button></a>
+            </div>
+        </ul>
+        <div class="tab-content">
+            <div id="home" class="tab-pane fade in active">
+                <div class="product_section_2">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th><strong>Номер объявления</strong></th>
+                            <th><strong>Название продукта</strong></th>
+                            <th><strong>Категория</strong></th>
+                            <th><strong>Цена</strong></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for oProduct in oProducts %}
+                            <tr>
+                                <td>{{ oProduct.id }}</td>
+                                <td>{{ oProduct.header }}</td>
+                                <td>{{ oProduct.category }}</td>
+                                <td>{{ oProduct.price }} тг.</td>
+                                <td><a href="{{ path('new_show', { 'id': oProduct.id }) }}" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-eye-open"></span></a></td>
+                                <td><a href="{{ path('new_edit', {'id': oProduct.id}) }}" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-pencil"></span></a></td>
+                                <td><a href="{{ path('new_delete', {'id':oProduct.id}) }}" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-remove"></span></a></td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

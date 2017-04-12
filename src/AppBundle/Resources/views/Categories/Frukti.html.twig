@@ -1,0 +1,67 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+    <div class="container_category">
+        <div class="product_section_3">
+            <table class="table">
+                <tbody>
+                {% for oProductCategory in oCategory %}
+                    <ul class="all_index_div_1">
+                        <li><a href="{{ path('all_index') }}">Все объявления</a><span class="glyphicon glyphicon-chevron-right"></span></li>
+                        <li>{{ oProductCategory.nameCategory }}</li>
+                    </ul>
+                {% endfor %}
+                <div class="categories">
+                    <ul>
+                        <li><a href="{{ path('category_ovowi') }}">Овощи</a></li>
+                        <li><a href="#">Кондитерские изделия</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="{{ path('category_fructi') }}">Фрукты и ягоды</a></li>
+                        <li class="categories_li"><a href="#">Мясо</a></li>
+                    </ul>
+                    <ul>
+                        <li><a href="#">Молочные изделия</a></li>
+                        <li><a href="#">Хлеб, сдоба</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3>Объявления</h3>
+                </div>
+                {% for oProduct in oProducts %}
+                    <tr>
+                        <td>
+                            <table width="100%">
+                                <tbody>
+                                <tr class="bordered_tr">
+                                    <td class="td_image">
+                                        <a href="{{ path('new_show', { 'id': oProduct.id }) }}">
+                                            <img class="image3" src="{{ asset('uploads/' ~ oProduct.photo) }}">
+                                        </a>
+                                    </td>
+                                    <td class="header_td">
+                                        <div>
+                                            <h3>
+                                                <a href="{{ path('new_show', { 'id': oProduct.id }) }}">{{ oProduct.header }}</a>
+                                                <p class="help-block">{{ oProduct.category }}</p>
+                                            </h3>
+                                        </div>
+                                    </td>
+                                    <td class="td_price">
+                                        <div>
+                                            <p>
+                                                <strong>{{ oProduct.price }} тг.</strong>
+                                            </p>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

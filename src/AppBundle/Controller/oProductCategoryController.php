@@ -22,11 +22,16 @@ class oProductCategoryController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $category = $em->getRepository('AppBundle:oProductCategory')->find(1);
+
+        $asd = $em->createQuery('SELECT p.id, p.nameCategory FROM AppBundle:oProductCategory p WHERE p.id = 1');
+        $oCategory = $asd->getResult();
+
         $query = $em->createQuery('SELECT p FROM AppBundle:oProduct p WHERE p.category = :category')->setParameter('category', $category);
         $oProducts = $query->getResult();
 
-        return $this->render('AppBundle:oProduct:Ovowi.html.twig',array(
+        return $this->render('AppBundle:Categories:Ovowi.html.twig',array(
             'oProducts' => $oProducts,
+            'oCategory' => $oCategory,
         ));
 
     }
@@ -39,11 +44,16 @@ class oProductCategoryController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $category = $em->getRepository('AppBundle:oProductCategory')->find(2);
+
+        $asd = $em->createQuery('SELECT p.id, p.nameCategory FROM AppBundle:oProductCategory p WHERE p.id = 2');
+        $oCategory = $asd->getResult();
+
         $query = $em->createQuery('SELECT p FROM AppBundle:oProduct p WHERE p.category = :category')->setParameter('category', $category);
         $oProducts = $query->getResult();
 
-        return $this->render('AppBundle:oProduct:Frukti.html.twig',array(
+        return $this->render('AppBundle:Categories:Frukti.html.twig',array(
             'oProducts' => $oProducts,
+            'oCategory' => $oCategory,
         ));
 
     }

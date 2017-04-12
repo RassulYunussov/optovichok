@@ -1,22 +1,24 @@
 {% extends 'AppBundle::base.html.twig' %}
-
+{% form_theme edit_form 'bootstrap_3_layout.html.twig' %}
 
 {% block body %}
-    <h1>oProduct edit</h1>
 
-    {{ form_start(edit_form) }}
-        {{ form_widget(edit_form) }}
-        <input type="submit" value="Edit" />
-    {{ form_end(edit_form) }}
+    <div class="div-ad-ad">
+        <h3>Изменить объявление</h3>
+    </div>
+    <div class="col-md-12 col-md-offset-0">
+        <div id="company-page-ad">
+            {{ form_start(edit_form) }}
+                {{ form_row(edit_form.header) }}
+                {{ form_row(edit_form.category) }}
+                {{ form_row(edit_form.description) }}
+                {{ form_row(edit_form.photo) }}
+                {{ form_row(edit_form.price) }}
+                <button type="submit" class="btn btn-primary btn-lg active">Изменить</button>
+            {{ form_end(edit_form) }}
+        </div>
+    </div>
 
-    <ul>
-        <li>
-            <a href="{{ path('all_index') }}">Back to the list</a>
-        </li>
-        <li>
-            {{ form_start(delete_form) }}
-                <input type="submit" value="Delete">
-            {{ form_end(delete_form) }}
-        </li>
-    </ul>
+
+
 {% endblock %}

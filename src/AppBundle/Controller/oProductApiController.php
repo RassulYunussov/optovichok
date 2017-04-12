@@ -41,36 +41,48 @@ class oProductApiController extends FOSRestController
     }
 
     /**
-     * @Rest\Get("/my_product")
+     * @Rest\Get("/my_product/{id}")
      */
-    public function myProductAction()
+    public function myProductAction($id,Request $request)
     {
-        $user = new oUser();
-        $user = $this->get('security.token_storage')->getToken()->getUser();
+        //$user = $this->get('security.token_storage')->getToken()->getUser();
+        //$user = $request->get('user_id');
         $em = $this->getDoctrine()->getEntityManager();
-        $id = $em->getRepository('AppBundle:oUser')->find($user);
+        $user = $em->getRepository('AppBundle:oUser')->find($id);
         $query = $em->createQuery(
-            'SELECT p from AppBundle:oProduct p WHERE p.userid = :id')->setParameter('id', $id);
-        $security = $query->getResult();
+            'SELECT p.id, p.header, p.description, d.nameCategory, p.photo, o.email, o.telephone
+             FROM AppBundle:oProduct p
+             LEFT JOIN AppBundle:oUser o
+             WITH p.userid = o.id
+             LEFT JOIN AppBundle:oProductCategory d
+             WITH p.category = d.id
+             WHERE p.userid = :id')
+             ->setParameter('id', $user);
+        $security = $query->getArrayResult();
 
-        return $security;
-
+        return new JsonResponse($security);
     }
 
     /**
-     * @Rest\Get("/product/{id}")
+     * @Rest\Get("/product_10/{id}")
      */
-    public function paginatorAction()
+    public function paginatorAction($id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $id = $_GET["id"];
-        $query = $em->createQuery('SELECT p FROM AppBundle:oProduct p WHERE p.id BETWEEN ($id+1) AND ($id+10)');
-        $result = $query->getResult();
+        $em = $this->getDoctrine()->getEntityManager();
 
-        while ($row = mysqli_fetch_assoc($result)) {
-            $array[] = $row;
-        }
-        return $array;
+        $dql = "SELECT p.id, p.header, p.description, d.nameCategory, p.photo, o.email, o.telephone
+                 FROM AppBundle:oProduct p
+                 LEFT JOIN AppBundle:oUser o
+                 WITH p.userid = o.id
+                 LEFT JOIN AppBundle:oProductCategory d
+                 WITH p.category = d.id
+                 WHERE p.id
+                 BETWEEN (:id+1) AND (:id+4)";
+
+        $query = $em->createQuery($dql)->setParameter('id',$id);
+        $oProducts = $query->getArrayResult();
+
+        return new JsonResponse($oProducts);
     }
 
     /**
@@ -119,19 +131,19 @@ class oProductApiController extends FOSRestController
         $category = $request->get('category');
         $description = $request->get('description');
         $photo = $request->get('photo');
-        //$userid = $request->get('user_id');
-        $user = $this->get('security.token_storage')->getToken()->getUser();
+        $userid = $request->get('user_id');
+        $price = $request->get('price');
+        //$user = $this->get('security.token_storage')->getToken()->getUser();
 
 
         $em = $this->getDoctrine()->getManager();
-        //$id = $em->getRepository('AppBundle:oUser')->find($user);
 
         $query = $em->createQuery('SELECT productCategory FROM AppBundle:oProductCategory productCategory WHERE productCategory.nameCategory = :nameCategory')->setParameter('nameCategory', $category);
         $ocategory = $query->getSingleResult();
-        //$query1 = $em->createQuery('SELECT id FROM AppBundle:oUser id WHERE id.id = :id')->setParameter('id', $userid);
-        //$ouserid = $query1->getSingleResult();
+        $query1 = $em->createQuery('SELECT id FROM AppBundle:oUser id WHERE id.id = :id')->setParameter('id', $userid);
+        $ouserid = $query1->getSingleResult();
 
-        if(empty($header) || empty($category) || empty($description) || empty($photo) /*|| empty($userid)*/)
+        if(empty($header) || empty($category) || empty($description) || empty($photo) || empty($userid) || empty($price))
         {
             return new View("NULL VALUES ARE NOT ALLOWED", Response::HTTP_NOT_ACCEPTABLE );
         }
@@ -145,7 +157,8 @@ class oProductApiController extends FOSRestController
         file_put_contents($dir, base64_decode($photo));
 
         $product->setPhoto($name);
-        $product->setUserid($user);
+        $product->setUserid($ouserid);
+        $product->setPrice($price);
         $em = $this->getDoctrine()->getManager();
         $em->persist($product);
         $em->flush();
@@ -153,11 +166,11 @@ class oProductApiController extends FOSRestController
     }
 
     /**
-     * @Rest\Put("/product/{id}")
+     * @Rest\Post("/product_update")
      */
-    public function updateProduct($id,Request $request)
+    public function updateProduct(Request $request)
     {
-        $product = new oProduct();
+        $id = $request->get('id');
         $header = $request->get('header');
         $category = $request->get('category');
         $description = $request->get('description');
@@ -167,7 +180,7 @@ class oProductApiController extends FOSRestController
 
         $em = $this->getDoctrine()->getManager();
 
-        $query = $em->createQuery('SELECT productCategory FROM AppBundle:oProductCategory productCategory WHERE productCategory.id = :id')->setParameter('id', $category);
+        $query = $em->createQuery('SELECT productCategory FROM AppBundle:oProductCategory productCategory WHERE productCategory.nameCategory = :nameCategory')->setParameter('nameCategory', $category);
         $ocategory = $query->getSingleResult();
 
         if (empty($product)) {
@@ -177,8 +190,12 @@ class oProductApiController extends FOSRestController
             $product->setHeader($header);
             $product->setCategory($ocategory);
             $product->setDescription($description);
-            $base64 = base64_decode($photo);
-            $product->setPhoto($base64);
+            $name = md5(uniqid()).'.jpeg';
+            $dir = $this->get('kernel')->getRootDir() . '/../web/uploads/'.$name;
+
+            file_put_contents($dir, base64_decode($photo));
+
+            $product->setPhoto($name);
             $sn->flush();
             return new View("Product Updated Successfully", Response::HTTP_OK);
         }
@@ -186,11 +203,11 @@ class oProductApiController extends FOSRestController
     }
 
     /**
-     * @Rest\Delete("/product/{id}")
+     * @Rest\Post("/product_delete")
      */
-    public function deleteProduct($id)
+    public function deleteProduct(Request $request)
     {
-        $product = new oProduct();
+        $id = $request->get('id');
         $sn = $this->getDoctrine()->getManager();
         $product = $this->getDoctrine()->getRepository('AppBundle:oProduct')->find($id);
         if (empty($product)) {

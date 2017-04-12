@@ -19,7 +19,7 @@ class oProductType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('header', SearchType::class);
+        $builder->add('header', TextType::class);
 
     }
 

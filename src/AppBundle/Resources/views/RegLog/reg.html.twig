@@ -1,0 +1,41 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+{% block body %}
+<div id="main-body">
+    <div class="row">
+        <div class="col-md-5 col-md-offset-3">
+            <div class="login-panel panel panel-default">
+                <ul class="nav nav-tabs_1">
+                    <li><a href="{{ path('login') }}">Вход</a></li>
+                    <li class="active_1"><a href="{{ path('user_registration') }}">Регистрация</a></li>
+                </ul>
+                <div class="panel-body">
+                    {{ form_start(form) }}
+                    <fieldset>
+                        <div class="form-group">
+                            {{ form_widget(form.username, {'attr': {'class': 'form-control', 'placeholder':'Имя пользователя', 'autofocus':true}}) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_widget(form.email, {'attr': {'class': 'form-control', 'placeholder':'E-mail'}}) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_widget(form.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder':'Пароль'}}) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_widget(form.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder':'Повторите пароль'}}) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_widget(form.telephone, {'attr': {'class': 'form-control', 'placeholder':'Телефон'}}) }}
+                        </div>
+                        <div class="form-group">
+                            {{ form_widget(form.role, {'attr': {'class': 'form-control', 'placeholder':'Роль'}}) }}
+                        </div>
+                        <button class="btn btn-lg btn-primary btn-block" type="submit">Регистрация</button>
+                    </fieldset>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

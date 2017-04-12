@@ -23,8 +23,8 @@ class oLoginController extends Controller
         if($this->get('security.authorization_checker')->isGranted('ROLE_CLIENT'))
             return $this->redirect('/users/client_page');
         if($this->get('security.authorization_checker')->isGranted('ROLE_COMPANY'))
-            return $this->redirect('/oproducts/company_page');
-        return $this->render('AppBundle:oSignin:login.html.twig', array(
+            return $this->redirect('/company_page/ads');
+        return $this->render('AppBundle:RegLog:reglog.html.twig', array(
             'last_username' => $lastUsername,
             'error' => $error,
         ));

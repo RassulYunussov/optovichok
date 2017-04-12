@@ -1,14 +1,17 @@
 {% extends 'AppBundle::base.html.twig' %}
 
 {% block body %}
-
+<div id="body_silver">
     <div class="product_body">
+        <div class="a_a_a">
+            <a href="javascript:history.back();"><span class="glyphicon glyphicon-chevron-left"></span>Назад</a>
+        </div>
         <div class="product_information">
             <div class="product_image">
                 <img class="image1" src="{{ asset('uploads/' ~ oProduct.photo) }}" alt="{{ oProduct.header }}">
             </div>
             <div class="product_header">
-                <h2>{{ oProduct.header }}</h2>
+                <strong>{{ oProduct.header }}</strong>
             </div>
             <div class="product_descrition">
                 <p>{{ oProduct.description }}</p>
@@ -16,20 +19,27 @@
         </div>
         <div class="user_information_price">
             <div class="product_price">
-                <h3>{{ oProduct.price }}</h3>
+                <strong>{{ oProduct.price }} тг.</strong>
             </div>
             {% for oUser in oUsers %}
-            <div class="product_user">
-                <h3>{{ oUser.Username }}</h3>
-            </div>
-            <div class="product_user_telephone">
-                <h3>{{ oUser.telephone }}</h3>
-            </div>
+                     <div class="product_user_telephone">
+                        <strong><span class="glyphicon glyphicon-earphone"> </span> {{ oUser.telephone }}</strong>
+                     </div>
+                     <div class="product_user">
+                         <div class="top_side">
+                             <a href="#"><img src="{{ asset('photo/user.png') }}"></a>
+                         </div>
+                         <div class="bottom_side">
+                             <div class="div_div_div">
+                                 <a href="#">{{ oUser.Username }}</a>
+                                 <a class="user-offers_1" href="#">Другие объявления автора</a>
+                             </div>
+                         </div>
+                     </div>
             {% endfor %}
         </div>
-        <div class="product_back"><a href="{{ path('all_index') }}">Назад</a></div>
     </div>
-
+</div>
 {% endblock %}
 
 

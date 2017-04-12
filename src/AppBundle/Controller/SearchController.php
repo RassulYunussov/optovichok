@@ -7,35 +7,54 @@
  */
 
 namespace AppBundle\Controller;
+use AppBundle\Entity\oProduct;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\SearchType;
 use Symfony\Component\HttpFoundation\Request;
 
 class SearchController extends Controller
 {
     /**
      * @Route("/search_result", name="search_result")
-     * @Method("POST")
+     * @Method({"GET", "POST"})
      */
     public function searchAction(Request $request){
 
-        $oProduct = new oProduct();
-        $form = $this->createForm('AppBundle\Form\oProductType', $oProduct);
+        $product = new oProduct();
+        $form = $this->createForm('\AppBundle\Form\SearchType', $product);
+        $em = $this->getDoctrine()->getManager();
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
+        if ($request->getMethod() == 'POST') {
 
-            $query = $em->createQuery('SELECT p FROM AppBundle:oProduct p WHERE p.header LIKE :header')->setParameter('header', $form);
-            $oProducts = $query->getResult();
+            $data = $form->getData();
+            $query = $em->createQuery('SELECT p FROM AppBundle:oProduct p WHERE p.header LIKE :header')->setParameter('header', $data);
+            $product = $query->getResult();
 
+            return $this->redirectToRoute('search_show', array('id' => $product->getId()));
         }
 
-        return $this->render('AppBundle:oProduct:show1.html.twig', array(
-            'oProducts' => $oProduct,
+        return $this->render('AppBundle::base.html.twig', array(
+            'oProducts' => $product,
+            'form' => $form->createView(),
         ));
+    }
 
+    /**
+     * @Route("/search_result/{id}", name="search_show")
+     * @Method("GET")
+     */
+    public function showAction(oProduct $product)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $deleteForm = $this->createDeleteForm($product);
+
+        return $this->render('AppBundle:oProduct:show1.html.twig', array(
+            'oProduct' => $product,
+            'delete_form' => $deleteForm->createView(),
+        ));
     }
 }

@@ -1,0 +1,41 @@
+{% extends 'AppBundle::base.html.twig' %}
+
+
+{% block body %}
+<div id="main-body">
+    <div class="row">
+        <div class="col-md-5 col-md-offset-3">
+            <div class="login-panel panel panel-default">
+                <ul class="nav nav-tabs_1">
+                    <li class="active"><a href="{{ path('login') }}">Вход</a></li>
+                    <li><a href="{{ path('user_registration') }}">Регистрация</a></li>
+                </ul>
+                <div class="panel-body">
+                    <form role="form" action="{{ path('login') }}" method="post">
+                        <fieldset>
+                            <input type="hidden" name="_csrf_token"
+                                   value="{{ csrf_token('authenticate') }}">
+
+                            <div class="form-group">
+                                {% if error %}
+                                    <div class="error">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                                {% endif %}
+                                <input class="form-control" placeholder="E-mail" id="username" name="_username" value="{{ last_username }}" type="email" autofocus>
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" placeholder="Пароль" id="password" name="_password" type="password" value="">
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input name="remember" type="checkbox" value="Remember Me">Запомнить
+                                </label>
+                            </div>
+                            <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

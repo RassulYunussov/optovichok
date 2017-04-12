@@ -38,9 +38,8 @@ class oRegistrationController extends Controller
             return $this->render('AppBundle:registration:Successful.html.twig');
         }
 
-        return $this->render(
-            'AppBundle:registration:register.html.twig',
-            array('form' => $form->createView())
-        );
+        return $this->render('AppBundle:RegLog:reg.html.twig', array(
+            'form' => $form->createView(),
+            ));
     }
 }
